@@ -9,6 +9,7 @@ export const PageButton = ({ page, setPage, maxPage }) => {
 
   pageButton.push(
     <button
+      key="prev"
       className="page-button"
       onClick={() => setPage(page - 1)}
       disabled={page === 1}
@@ -17,10 +18,14 @@ export const PageButton = ({ page, setPage, maxPage }) => {
     </button>
   );
 
-  for (let i = 1; i <= maxPage; i++) {
+  const startPage = Math.max(1, page - 2);
+  const endPage = Math.min(maxPage, startPage + 4);
+
+  for (let i = startPage; i <= endPage; i++) {
     pageButton.push(
       <button
-        className="page-button page-number"
+        key={i}
+        className={`page-button page-number ${i === page ? "active" : ""}`}
         onClick={() => handlePage(i)}
         disabled={i === page}
       >
@@ -31,6 +36,7 @@ export const PageButton = ({ page, setPage, maxPage }) => {
 
   pageButton.push(
     <button
+      key="next"
       className="page-button"
       onClick={() => setPage(page + 1)}
       disabled={page === maxPage}
@@ -39,5 +45,5 @@ export const PageButton = ({ page, setPage, maxPage }) => {
     </button>
   );
 
-  return pageButton;
+  return <div className="page-buttons-container">{pageButton}</div>;
 };

@@ -1,4 +1,4 @@
-import "./Products.css";
+import "./SearchProduct.css";
 export const SearchProduct = () => {
   return (
     <div>

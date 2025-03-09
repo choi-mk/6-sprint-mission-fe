@@ -1,11 +1,11 @@
 import axios from "axios";
 
 const instance = axios.create({
-  baseURL: "https://sprint-mission-api.vercel.app/products",
+  baseURL: "https://panda-market-api.vercel.app/products",
 });
 
 export const getProductList = async ({
-  orderBy = "favoriteCount",
+  orderBy = "favorite",
   page = 1,
   pageSize = 10,
   keyword = "",
@@ -23,11 +23,6 @@ export const getProductList = async ({
       console.error("Request failed");
     }
   }
-};
-
-export const getNumProduct = async () => {
-  const res = await instance.get("/");
-  return res.data.length;
 };
 
 export const getProduct = async (id) => {

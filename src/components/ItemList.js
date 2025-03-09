@@ -1,6 +1,16 @@
-import "./Item.css";
+import "./Items.css";
 import heart from "../asset/image/ic_heart.png";
-export const Item = ({ item }) => {
+export const ItemList = ({ items }) => {
+  return (
+    <ul className="items-list">
+      {items.map((item) => (
+        <Item key={item.id} item={item} />
+      ))}
+    </ul>
+  );
+};
+
+const Item = ({ item }) => {
   return (
     <div className="item">
       <img className="item-img" src={item.images} alt={item.name}></img>

@@ -1,58 +1,56 @@
 import { BestProduct } from "./components/BestProduct";
-import { Header } from "./components/CommonUI/Header";
+import { Header } from "./components/Header";
 import { SellProduct } from "./components/SellProduct";
 import { useState, useEffect } from "react";
 import { getNumProduct, getProductList } from "./response/ProductService";
 import "./App.css";
 import { PageButton } from "./components/PageButton";
-import { Footer } from "./components/CommonUI/Footer";
+import { Footer } from "./components/Footer";
+
+const LIMIT = 10;
 
 function App() {
   const [bestItems, setBestItems] = useState([]);
   const [items, setItems] = useState([]);
   const [orderBy, setOrderBy] = useState("favoriteCount");
   const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
   const [maxPage, setMaxPage] = useState(1);
 
   const handleLoad = async (options) => {
     const result = await getProductList(options);
+    // const { products, paging } = result;
+    console.log(result.paging);
     setItems(result);
+    console.log(result);
     let totalCount = await getNumProduct();
 
     const calMaxPage = Math.ceil(totalCount / options.pageSize);
     setMaxPage(calMaxPage);
+    // const bestresult = await getProductList({
+    //   limit: 4,
+    //   order: "favoriteCount",
+    //   offset: 0,
+    // });
+    // setBestItems(bestresult);
+
+    // setItems((prevItems) => [...prevItems, ...items]);
   };
-  const updatePageSize = () => {
-    const width = window.innerWidth;
-    if (width <= 768) {
-      setPageSize(4);
-    } else if (width <= 1200) {
-      setPageSize(6);
-    } else {
-      setPageSize(10);
-    }
-  };
+
   const handleBestLoad = async () => {
     const result = await getProductList({
-      pageSize: pageSize / 2 - 1,
+      pageSize: 4,
       orderBy: "favoriteCount",
     });
+    console.log(result);
     setBestItems(result);
   };
   useEffect(() => {
-    handleLoad({ orderBy, page, pageSize, keyword: "" });
-  }, [orderBy, page, pageSize]);
-  useEffect(() => {
-    updatePageSize();
-    window.addEventListener("resize", updatePageSize);
-    return () => {
-      window.removeEventListener("resize", updatePageSize);
-    };
-  }, []);
+    handleLoad({ orderBy, page, pageSize: LIMIT, keyword: "" });
+  }, [orderBy, page]);
+
   useEffect(() => {
     handleBestLoad();
-  }, [page, pageSize]);
+  }, [page]);
 
   return (
     <div className="App">

@@ -1,13 +1,14 @@
-import { BestProduct } from "./components/BestProduct";
-import { Header } from "./components/Header";
-import { SellProduct } from "./components/SellProduct";
+import { BestProduct } from "../components/BestProduct";
+import { Header } from "../components/Header";
+import { SellProduct } from "../components/SellProduct";
 import { useState, useEffect } from "react";
-import { getProductList } from "./response/ProductService";
-import "./App.css";
-import { PageButton } from "./components/PageButton";
-import { Footer } from "./components/Footer";
+import { getProductList } from "../api/ProductService";
+import "./ItemPage.css";
+import { PageButton } from "../components/PageButton";
+import { Footer } from "../components/Footer";
+import { useParams, Link } from "react-router-dom";
 
-function App() {
+function SellProductPage() {
   const [bestItems, setBestItems] = useState([]);
   const [items, setItems] = useState([]);
   const [orderBy, setOrderBy] = useState("favorite");
@@ -60,7 +61,6 @@ function App() {
 
   return (
     <div className="App">
-      <Header />
       <div className="products">
         <BestProduct items={bestItems} />
         <SellProduct items={items} order={orderBy} setOrder={setOrderBy} />
@@ -68,9 +68,8 @@ function App() {
           <PageButton page={page} setPage={setPage} maxPage={maxPage} />
         </div>
       </div>
-      <Footer />
     </div>
   );
 }
 
-export default App;
+export default SellProductPage;

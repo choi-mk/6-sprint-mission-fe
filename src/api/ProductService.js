@@ -1,7 +1,9 @@
 import axios from "axios";
+// import { PORT } from "../server";
 
 const instance = axios.create({
   baseURL: "https://panda-market-api.vercel.app/products",
+  // baseURL: `http://localhost:${PORT}/products`,
 });
 
 const handleError = (e) => {
@@ -19,7 +21,7 @@ const validnum = (param, paramName) => {
 };
 
 export const getProductList = async ({
-  orderBy = "favorite",
+  orderBy = "recent",
   page = 1,
   pageSize = 10,
   keyword = "",
@@ -49,14 +51,15 @@ export const getProductList = async ({
 //     }
 //   }
 // };
-// export const createProduct = async (data) => {
-//   try {
-//     const res = await instance.post("/", data);
-//     return res.data;
-//   } catch (e) {
-//     handleError(e);
-//   }
-// };
+
+export const createProduct = async (data) => {
+  try {
+    const res = await instance.post("/", data);
+    return res.data;
+  } catch (e) {
+    handleError(e);
+  }
+};
 
 // export const patchProduct = async (id, data) => {
 //   try {

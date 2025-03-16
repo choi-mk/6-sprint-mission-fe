@@ -24,7 +24,6 @@ export const SellProduct = ({ items, order, setOrder }) => {
           </Link>
           <select onChange={handleSort} value={order} className="order-button">
             <option value="recent">최신순</option>
-            <option value="favorite">좋아요순</option>
           </select>
         </div>
       </div>

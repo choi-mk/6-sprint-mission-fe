@@ -29,7 +29,7 @@
 .register-button {
   width: 74px;
   height: 42px;
-  background-color: #9ca3af;
+  background-color: #3692ff;
   text-decoration: none;
   border-radius: 8px;
   display: flex;
@@ -37,7 +37,18 @@
   align-items: center;
   color: white;
 }
-
+.register-button-disabled {
+  width: 74px;
+  height: 42px;
+  background-color: #9ca3af;
+  text-decoration: none;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  pointer-events: none;
+}
 .name {
   width: 100%;
 }

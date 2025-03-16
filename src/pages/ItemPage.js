@@ -1,17 +1,13 @@
-import { BestProduct } from "../components/BestProduct";
-import { Header } from "../components/Header";
 import { SellProduct } from "../components/SellProduct";
 import { useState, useEffect } from "react";
 import { getProductList } from "../api/ProductService";
 import "./ItemPage.css";
 import { PageButton } from "../components/PageButton";
-import { Footer } from "../components/Footer";
-import { useParams, Link } from "react-router-dom";
 
 function SellProductPage() {
   const [bestItems, setBestItems] = useState([]);
   const [items, setItems] = useState([]);
-  const [orderBy, setOrderBy] = useState("favorite");
+  const [orderBy, setOrderBy] = useState("recent");
   const [page, setPage] = useState(1);
   const [maxPage, setMaxPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
@@ -37,7 +33,7 @@ function SellProductPage() {
   const handleBestLoad = async () => {
     const result = await getProductList({
       pageSize: pageSize / 2 - 1,
-      orderBy: "favorite",
+      orderBy: "recent",
     });
     setBestItems(result.list);
   };
@@ -62,7 +58,6 @@ function SellProductPage() {
   return (
     <div className="App">
       <div className="products">
-        <BestProduct items={bestItems} />
         <SellProduct items={items} order={orderBy} setOrder={setOrderBy} />
         <div className="page-buttons">
           <PageButton page={page} setPage={setPage} maxPage={maxPage} />

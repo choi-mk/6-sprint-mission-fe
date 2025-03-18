@@ -1,10 +1,4 @@
-import axios from "axios";
-// import { PORT } from "../server";
-
-const instance = axios.create({
-  baseURL: "https://panda-market-api.vercel.app/products",
-  // baseURL: `http://localhost:${PORT}/products`,
-});
+import { client } from "./index.api";
 
 const handleError = (e) => {
   if (e.response) {
@@ -20,19 +14,19 @@ const validnum = (param, paramName) => {
   }
 };
 
-export const getProductList = async ({
+export const getItemList = async ({
   orderBy = "recent",
   page = 1,
   pageSize = 10,
-  keyword = "",
+  keyWord = "",
 } = {}) => {
   try {
     validnum(page, "page");
     validnum(pageSize, "pageSize");
-    const res = await instance.get("/", {
-      params: { orderBy, page, pageSize, keyword },
+    const res = await client.get("/", {
+      params: { orderBy, page, pageSize, keyWord },
     });
-
+    console.log(res.data);
     return res.data;
   } catch (e) {
     handleError(e);
@@ -41,7 +35,7 @@ export const getProductList = async ({
 
 // export const getProduct = async (id) => {
 //   try {
-//     const res = await instance.get(`/${id}`);
+//     const res = await client.get(`/${id}`);
 //     return res.data;
 //   } catch (e) {
 //     if (e.response) {
@@ -52,9 +46,9 @@ export const getProductList = async ({
 //   }
 // };
 
-export const createProduct = async (data) => {
+export const createItem = async (data) => {
   try {
-    const res = await instance.post("/", data);
+    const res = await client.post("/", data);
     return res.data;
   } catch (e) {
     handleError(e);
@@ -63,7 +57,7 @@ export const createProduct = async (data) => {
 
 // export const patchProduct = async (id, data) => {
 //   try {
-//     const res = await instance.patch(`/${id}`, data);
+//     const res = await client.patch(`/${id}`, data);
 //     return res.data;
 //   } catch (e) {
 //     handleError(e);
@@ -72,9 +66,16 @@ export const createProduct = async (data) => {
 
 // export const deleteProduct = async (id) => {
 //   try {
-//     const res = await instance.delete(`/${id}`);
+//     const res = await client.delete(`/${id}`);
 //     return res.data;
 //   } catch (e) {
 //     handleError(e);
 //   }
 // };
+
+const itemAPI = {
+  getItemList,
+  createItem,
+};
+
+export default itemAPI;

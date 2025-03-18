@@ -49,6 +49,11 @@
   color: white;
   pointer-events: none;
 }
+
+.error-message {
+  color: red;
+}
+
 .name {
   width: 100%;
 }

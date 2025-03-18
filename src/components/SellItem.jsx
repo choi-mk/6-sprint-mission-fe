@@ -1,5 +1,5 @@
-import "./SellProduct.css";
-import { SearchProduct } from "./SearchProduct";
+import "./SellItem.css";
+import { SearchProduct } from "./SearchItem";
 import { useState } from "react";
 import { Item } from "./Item";
 import { Link } from "react-router-dom";

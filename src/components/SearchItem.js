@@ -1,4 +1,4 @@
-import styles from "./SearchProduct.module.css";
+import styles from "./SearchItem.module.css";
 import { useState } from "react";
 export const SearchProduct = ({ onSearch }) => {
   const [keyword, setKeyword] = useState("");

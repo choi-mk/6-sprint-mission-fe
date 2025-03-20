@@ -4,6 +4,7 @@ import ItemPage from "./pages/ItemPage.js";
 import HomePage from "./pages/HomePage.js";
 import RegisterPage from "./pages/RegisterPage.js";
 import LoginPage from "./pages/LoginPage.js";
+import "./styles/global.css";
 
 function Main() {
   return (

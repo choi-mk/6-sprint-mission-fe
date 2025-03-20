@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import "./LoginPage.css";
+import styles from "./LoginPage.module.css";
 import logo from "../asset/image/ic_logo.png";
 import google from "../asset/image/ic_google.png";
 import kakao from "../asset/image/ic_kakao.png";

@@ -2,10 +2,10 @@ import { useState } from "react";
 
 export const useValidation = () => {
   const [valids, setValid] = useState({
-    name: "",
-    description: "",
-    price: "",
-    tag: "",
+    name: "none",
+    description: "none",
+    price: "none",
+    tag: "none",
   });
 
   const validate = (name, value) => {

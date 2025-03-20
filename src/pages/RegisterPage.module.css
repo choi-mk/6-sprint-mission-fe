@@ -36,6 +36,7 @@
   justify-content: center;
   align-items: center;
   color: white;
+  border: none;
 }
 .register-button-disabled {
   width: 74px;
@@ -48,6 +49,8 @@
   align-items: center;
   color: white;
   pointer-events: none;
+  cursor: not-allowed;
+  border: none;
 }
 
 .error-message {
@@ -60,6 +63,11 @@
 .input-name {
   background-color: #f3f4f6;
   height: 56px;
+  width: 100%;
+  border-radius: 0.75rem;
+  border: none;
+  padding: 0 1.5rem;
+  box-sizing: border-box;
 }
 
 .sub-title {
@@ -72,19 +80,43 @@
 .description {
   width: 100%;
 }
+.input-description {
+  height: 280px;
+  width: 100%;
+  border: none;
+  background-color: #f3f4f6;
+  border-radius: 0.75rem;
+  padding: 1rem 1.5rem;
+  resize: none;
+  box-sizing: border-box;
+  font-family: "Pretendard Variable", Pretendard, -apple-system,
+    BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI",
+    "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+}
 
 .price {
   width: 100%;
 }
+.input-price {
+  width: 100%;
+  background-color: #f3f4f6;
+  border-radius: 0.75rem;
+  border: none;
+  height: 56px;
+  padding: 0 1.5rem;
+  box-sizing: border-box;
+}
 .tag {
   width: 100%;
 }
-
-.input-description {
-  height: 280px;
-  display: flex;
-}
-.input-description::placeholder {
-  position: absolute;
-  top: 10%;
+.input-tag {
+  width: 100%;
+  border: none;
+  background-color: #f3f4f6;
+  border-radius: 0.75rem;
+  border: none;
+  height: 56px;
+  padding: 0 1.5rem;
+  box-sizing: border-box;
 }

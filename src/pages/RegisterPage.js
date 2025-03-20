@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import styles from "./RegisterPage.module.css";
 import Tag from "../components/Tag";
-import { useState } from "react";
-import { useValidation } from "../hooks/Validation";
+import { useEffect, useState } from "react";
+import { useValidation } from "../hooks/useValidation";
 import api from "../api/index.api";
 
 function RegisterPage() {
@@ -44,28 +44,9 @@ function RegisterPage() {
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter" && tagInput.trim() !== "") {
+      e.preventDefault();
       setTags([...tags, tagInput]);
       setTagInput("");
-    }
-  };
-
-  const isFormValid = (e) => {
-    // if (
-    //   valids.name === "" &&
-    //   valids.description === "" &&
-    //   valids.price === "" &&
-    //   tags != []
-    // ) {
-    //   setIsSubmit(true);
-    // }
-
-    if (
-      nameInput !== "" &&
-      descriptionInput !== "" &&
-      priceInput !== "" &&
-      tags != []
-    ) {
-      setIsSubmit(true);
     }
   };
 
@@ -73,6 +54,17 @@ function RegisterPage() {
     setTags(tags.filter((tag) => tag !== t));
   };
 
+  useEffect(() => {
+    validate("name", nameInput);
+    validate("description", descriptionInput);
+    validate("price", priceInput);
+    validate("tag", tagInput);
+    if ((valids.name == "" && valids.description == "", valids.price == "")) {
+      setIsSubmit(true);
+    } else {
+      setIsSubmit(false);
+    }
+  }, [nameInput, descriptionInput, priceInput, tags]);
   return (
     <div className={styles.container}>
       <form onSubmit={handleSubmit} className={styles["input-container"]}>
@@ -96,32 +88,26 @@ function RegisterPage() {
             className={styles["input-name"]}
             placeholder="상품명을 입력해주세요"
             onChange={(e) => handleChange(e, "name")}
-            onBlur={(e) => validate(e.target.value, "name")}
           />
-          <p className="error-message">{valids.name}</p>
+          <p className={styles["error-message"]}>{valids.name}</p>
         </div>
         <div className={styles.description}>
           <label className={styles["sub-title"]}>상품 소개</label>
-          <input
+          <textarea
             className={styles["input-description"]}
             placeholder="상품 소개를 입력해주세요"
             onChange={(e) => handleChange(e, "description")}
-            onBlur={(e) => validate(e.target.value, "description")}
           />
-          <p className="error-message">{valids.description}</p>
+          <p className={styles["error-message"]}>{valids.description}</p>
         </div>
         <div className={styles.price}>
           <label className={styles["sub-title"]}>판매가격</label>
           <input
             className={styles["input-price"]}
             placeholder="판매가격을 입력해주세요"
-            onChange={(e) => {
-              handleChange(e, "price");
-              isFormValid(e);
-            }}
-            onBlur={(e) => validate(e.target.value, "price")}
+            onChange={(e) => handleChange(e, "price")}
           />
-          <p className="error-message">{valids.price}</p>
+          <p className={styles["error-message"]}>{valids.price}</p>
         </div>
         <div className={styles.tag}>
           <label className={styles["sub-title"]}>태그</label>
@@ -132,7 +118,7 @@ function RegisterPage() {
             value={tagInput}
             onKeyDown={handleKeyDown}
           />
-          <p className="error-message">{valids.tag}</p>
+          <p className={styles["error-message"]}>{valids.tag}</p>
           <div>
             {tags.map((tag, index) => (
               <Tag

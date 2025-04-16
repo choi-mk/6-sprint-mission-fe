@@ -1,0 +1,30 @@
+import React from "react";
+
+function Post() {
+  const heart = 10000;
+  return (
+    <div className="w-full h-34 bg-[#FCFCFC] border-b border-gray-200">
+      <div className="flex justify-between">
+        <p className="font-semibold w-[263px] text-lg">
+          맥북 16인치 16기가 1테라 정도 사양이면 얼마에 팔아야 하나요?
+        </p>
+        <div className="w-18 h-18 flex justify-center items-center bg-white rounded-xl border border-gray-200">
+          <img className="w-12 h-11" src="/assets/img/default_img.png" />
+        </div>
+      </div>
+      <div className="flex justify-between mt-4">
+        <div className="flex gap-2">
+          <img className="w-6 h-6" src="/assets/ic/ic_profile.png" />
+          <p>총명한 판다</p>
+          <div className="text-gray-400">2024.04.16</div>
+        </div>
+        <div className="flex gap-2 items-center">
+          <img className="w-5 h-4.5" src="/assets/ic/ic_heart.png" />
+          <div className="text-gray-500">{heart > 9999 ? "9999+" : heart}</div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default Post;

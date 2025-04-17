@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 
 function Header() {
@@ -6,7 +7,9 @@ function Header() {
       <div className="flex gap-2">
         <p className="text-primary-100 font-bold text-lg">판다마켓</p>
         <div className="flex gap-2 items-center">
-          <p className="font-bold text-gray-600">자유게시판</p>
+          <Link href="/board">
+            <p className="font-bold text-gray-600">자유게시판</p>
+          </Link>
           <p className="font-bold text-gray-600">중고마켓</p>
         </div>
       </div>

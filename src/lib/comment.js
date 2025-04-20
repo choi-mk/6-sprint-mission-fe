@@ -35,7 +35,6 @@ export const patchComment = async (articleId, commentId, commentData) => {
 };
 
 export const deleteComment = async (articleId, commentId) => {
-  console.log(commentId);
   const res = await fetch(
     `http://localhost:3000/api/board/${articleId}/comments/${commentId}`,
     {

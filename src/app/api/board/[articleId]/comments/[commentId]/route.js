@@ -23,7 +23,6 @@ export async function PATCH(req, { params }) {
 export async function DELETE(req, { params }) {
   try {
     const { commentId } = await params;
-    console.log(commentId);
     const deletedComment = await prisma.comment.delete({
       where: { id: commentId },
     });

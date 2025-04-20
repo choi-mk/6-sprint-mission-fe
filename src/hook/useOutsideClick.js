@@ -9,7 +9,6 @@ function useOutsideClick(initialState = false) {
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (dropDownRef.current && !dropDownRef.current.contains(e.target)) {
-        console.log("dlsjf");
         setIsOpen(false);
       }
     };

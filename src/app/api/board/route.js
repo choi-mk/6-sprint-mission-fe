@@ -5,9 +5,7 @@ export async function GET(req) {
   try {
     const url = new URL(req.url);
     const search = url.searchParams.get("search");
-    console.log(search);
     const orderBy = url.searchParams.get("orderBy");
-    console.log(orderBy);
 
     const articles = await prisma.article.findMany({
       where: {
@@ -20,7 +18,6 @@ export async function GET(req) {
         createdAt: orderBy,
       },
     });
-    console.log("complete");
 
     return NextResponse.json(articles);
   } catch (e) {
@@ -32,7 +29,6 @@ export async function POST(req) {
   try {
     const body = await req.json();
     const { title, content } = body;
-    console.log(title);
 
     if (!title || !content) {
       return NextResponse.json(

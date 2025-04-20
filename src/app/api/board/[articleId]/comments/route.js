@@ -6,7 +6,6 @@ export async function POST(req, { params }) {
     const { articleId } = await params;
     const body = await req.json();
     const { content } = body;
-    console.log(content);
 
     if (!content) {
       return NextResponse.json(

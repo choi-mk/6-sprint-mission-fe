@@ -13,7 +13,6 @@ function BestBulletin() {
     const search = "";
     const order = "desc";
     const data = await getAllArticles(search, order);
-    console.log(data);
     setArticles(data);
     setIsLoading(false);
   };

@@ -4,8 +4,10 @@ export const getArticle = async (id) => {
   return data;
 };
 
-export const getAllArticles = async () => {
-  const res = await fetch(`http://localhost:3000/api/board`);
+export const getAllArticles = async (search = "", order = "asc") => {
+  const res = await fetch(
+    `http://localhost:3000/api/board?search=${search}&orderBy=${order}`
+  );
   const data = await res.json();
   return data;
 };

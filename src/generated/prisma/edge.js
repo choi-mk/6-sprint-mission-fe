@@ -178,7 +178,7 @@ const config = {
     "db": {
       "url": {
         "fromEnvVar": "DATABASE_URL",
-        "value": "postgresql://pandamarket:xsK1C3kojLfB9NwxCMhZz26X7s31eLyn@dpg-cvdt037noe9s73ei9f5g-a.singapore-postgres.render.com/pandamarket_bf8c?schema=public"
+        "value": "postgresql://pandamarket:h7uiXCa9ryUJyrR4cSIbdggOi7jV37ML@dpg-d02e0amuk2gs73ecm1u0-a.singapore-postgres.render.com/pandamarket_z9sz?schema=public"
       }
     }
   },

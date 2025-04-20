@@ -1,11 +1,12 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Dropdown from "./Dropdown";
 import useOutsideClick from "@/hook/useOutsideClick";
 
 function ArticleDetail({ title, content, articleId }) {
   const { isOpen, setIsOpen, dropDownRef } = useOutsideClick();
+
   const handleClick = () => {
     setIsOpen((prev) => !prev);
   };

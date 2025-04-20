@@ -1,9 +1,26 @@
 import { NextResponse } from "next/server";
 import prisma from "../../../../prisma/client";
 
-export async function GET() {
+export async function GET(req) {
   try {
-    const articles = await prisma.article.findMany();
+    const url = new URL(req.url);
+    const search = url.searchParams.get("search");
+    console.log(search);
+    const orderBy = url.searchParams.get("orderBy");
+    console.log(orderBy);
+
+    const articles = await prisma.article.findMany({
+      where: {
+        title: {
+          contains: search,
+          mode: "insensitive",
+        },
+      },
+      orderBy: {
+        createdAt: orderBy,
+      },
+    });
+    console.log("complete");
 
     return NextResponse.json(articles);
   } catch (e) {

@@ -7,7 +7,6 @@ import { getArticle } from "@/lib/article";
 export default async function ArticleDetailPage({ params }) {
   const { articleId } = await params;
   const article = await getArticle(articleId);
-  console.log(articleId);
   return (
     <div className="flex justify-center m-4 flex-col">
       <ArticleDetail

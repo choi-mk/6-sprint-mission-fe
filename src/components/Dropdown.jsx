@@ -5,25 +5,23 @@ import { useRouter } from "next/navigation";
 
 import React from "react";
 
-function Dropdown({ articleId, commentId = null }) {
+function Dropdown({ articleId, commentId = null, setIsEdit = null }) {
   const router = useRouter();
-  console.log("commentId");
-  console.log(commentId);
+
   const handleClickDelete = async (e) => {
     if (!commentId) {
       await deleteArticle(articleId);
       router.push("/board");
     } else {
-      console.log(commentId);
       const delComment = await deleteComment(articleId, commentId);
+      window.location.reload();
     }
   };
   const handleClickPatch = async (e) => {
     if (!commentId) {
-      // await patchArticle(articleId);
       router.push(`/board/post/${articleId}`);
     } else {
-      await patchComment(articleId, commentId);
+      setIsEdit(true);
     }
   };
   return (

@@ -7,7 +7,7 @@ function Article({ title }) {
       <div className="flex justify-between">
         <p className="font-semibold w-[263px] text-lg">{title}</p>
         <div className="w-18 h-18 flex justify-center items-center bg-white rounded-xl border border-gray-100">
-          <img className="w-12 h-11" src="/assets/img/default_img.png" />
+          <img className="w-12 h-11" src="/assets/img/img_default.png" />
         </div>
       </div>
       <div className="flex justify-between mt-4">

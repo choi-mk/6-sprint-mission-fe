@@ -7,6 +7,9 @@ function CommentForm({ articleId }) {
   const [content, setContent] = useState("");
   const handleClick = async () => {
     const newComment = await postComment(articleId, { content });
+    if (newComment) {
+      window.location.reload();
+    }
   };
 
   const isValid = content.trim() !== "";

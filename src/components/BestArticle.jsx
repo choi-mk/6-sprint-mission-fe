@@ -1,19 +1,17 @@
 import React from "react";
 
-function BestArticle() {
+function BestArticle({ title }) {
   const heart = 10000;
   return (
     <div className="w-96 h-49.5 bg-gray-50 rounded-lg">
       <div className="w-25.5 h-7.5 bg-primary-100 rounded-b-2xl ml-6 flex justify-center items-center gap-1">
-        <img className="w-3 h-3.5" src="/assets/ic/ic_medal.png"></img>
+        <img className="w-3.5 h-3.5" src="/assets/ic/ic_medal.png"></img>
         <p className="text-white font-semibold">Best</p>
       </div>
       <div className="flex ml-6 mt-4">
-        <p className="font-semibold text-xl w-46 h-16">
-          맥북 16인치 얼마에 팔아야 하나요?
-        </p>
+        <p className="font-semibold text-xl w-46 h-16">{title}</p>
         <div className="w-18 h-18 bg-white rounded-md flex justify-center items-center mr-6 ml-auto">
-          <img className="w-12 h-11" src="/assets/img/default_img.png"></img>
+          <img className="w-12 h-11" src="/assets/img/img_default.png"></img>
         </div>
       </div>
       <div className="flex ml-6 mt-10">

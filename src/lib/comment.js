@@ -1,6 +1,6 @@
 export const postComment = async (articleId, commentData) => {
   const res = await fetch(
-    `http://localhost:3000/api/board/${articleId}/comments`,
+    `${process.env.NEXT_PUBLIC_API_URL}/api/board/${articleId}/comments`,
     {
       method: "POST",
       headers: {
@@ -18,7 +18,7 @@ export const postComment = async (articleId, commentData) => {
 
 export const patchComment = async (articleId, commentId, commentData) => {
   const res = await fetch(
-    `http://localhost:3000/api/board/${articleId}/comments/${commentId}`,
+    `${process.env.NEXT_PUBLIC_API_URL}/api/board/${articleId}/comments/${commentId}`,
     {
       method: "PATCH",
       headers: {
@@ -36,7 +36,7 @@ export const patchComment = async (articleId, commentId, commentData) => {
 
 export const deleteComment = async (articleId, commentId) => {
   const res = await fetch(
-    `http://localhost:3000/api/board/${articleId}/comments/${commentId}`,
+    `${process.env.NEXT_PUBLIC_API_URL}/api/board/${articleId}/comments/${commentId}`,
     {
       method: "DELETE",
     }

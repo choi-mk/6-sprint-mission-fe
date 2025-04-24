@@ -1,6 +1,6 @@
-import CommentsList from "@/components/CommentsList";
-import CommentForm from "@/components/CommentForm";
-import ArticleDetail from "@/components/ArticleDetail";
+import CommentsList from "@/app/board/[articleId]/_components/CommentsList";
+import CommentForm from "@/app/board/[articleId]/_components/CommentForm";
+import ArticleDetail from "@/app/board/[articleId]/_components/ArticleDetail";
 import Link from "next/link";
 import { getArticle } from "@/lib/article";
 

@@ -1,6 +1,14 @@
+export const getAllComments = async (articleId, limit = 10) => {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/articles/${articleId}/comments?limit=${limit}`
+  );
+  const data = await res.json();
+  return data.list;
+};
+
 export const postComment = async (articleId, commentData) => {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/board/${articleId}/comments`,
+    `${process.env.NEXT_PUBLIC_API_URL}/articles/${articleId}/comments`,
     {
       method: "POST",
       headers: {
@@ -16,9 +24,9 @@ export const postComment = async (articleId, commentData) => {
   return data;
 };
 
-export const patchComment = async (articleId, commentId, commentData) => {
+export const patchComment = async (commentId, commentData) => {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/board/${articleId}/comments/${commentId}`,
+    `${process.env.NEXT_PUBLIC_API_URL}/comments/${commentId}`,
     {
       method: "PATCH",
       headers: {
@@ -34,9 +42,9 @@ export const patchComment = async (articleId, commentId, commentData) => {
   return data;
 };
 
-export const deleteComment = async (articleId, commentId) => {
+export const deleteComment = async (commentId) => {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/board/${articleId}/comments/${commentId}`,
+    `${process.env.NEXT_PUBLIC_API_URL}/comments/${commentId}`,
     {
       method: "DELETE",
     }

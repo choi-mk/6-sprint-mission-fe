@@ -11,7 +11,7 @@ function BestBulletin() {
 
   const fetchArticles = async () => {
     const search = "";
-    const order = "desc";
+    const order = "recent";
     const data = await getAllArticles(search, order);
     setArticles(data);
     setIsLoading(false);

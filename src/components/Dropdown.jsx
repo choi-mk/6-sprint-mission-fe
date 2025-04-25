@@ -1,6 +1,6 @@
 "use client";
 import { deleteArticle, patchArticle } from "@/lib/article";
-import { deleteComment, patchComment } from "@/lib/comment";
+import { deleteComment } from "@/lib/comment";
 import { useRouter } from "next/navigation";
 
 import React from "react";
@@ -13,7 +13,7 @@ function Dropdown({ articleId, commentId = null, setIsEdit = null }) {
       await deleteArticle(articleId);
       router.push("/board");
     } else {
-      const delComment = await deleteComment(articleId, commentId);
+      const delComment = await deleteComment(commentId);
       window.location.reload();
     }
   };

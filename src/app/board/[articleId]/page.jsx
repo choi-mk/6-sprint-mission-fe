@@ -3,10 +3,13 @@ import CommentForm from "@/app/board/[articleId]/_components/CommentForm";
 import ArticleDetail from "@/app/board/[articleId]/_components/ArticleDetail";
 import Link from "next/link";
 import { getArticle } from "@/lib/article";
+import { getAllComments } from "@/lib/comment";
 
 export default async function ArticleDetailPage({ params }) {
   const { articleId } = await params;
   const article = await getArticle(articleId);
+  const comments = await getAllComments(articleId);
+  console.log(comments);
   return (
     <div className="flex justify-center m-4 flex-col">
       <ArticleDetail
@@ -15,7 +18,7 @@ export default async function ArticleDetailPage({ params }) {
         articleId={articleId}
       />
       <CommentForm articleId={articleId} />
-      <CommentsList comments={article.comments} articleId={articleId} />
+      <CommentsList comments={comments} articleId={articleId} />
       <div className="flex justify-center mt-10 ">
         <Link href="/board">
           <button className="bg-primary-100 text-white flex justify-center items-center w-60 h-12 font-semibold rounded-4xl">

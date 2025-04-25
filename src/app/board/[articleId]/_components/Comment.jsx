@@ -17,7 +17,7 @@ function Comment({ dcontent, commentId, articleId }) {
     setIsEdit(false);
   };
   const handleClickEdit = async () => {
-    const updatedComment = await patchComment(articleId, commentId, {
+    const updatedComment = await patchComment(commentId, {
       content,
     });
     setIsEdit(false);

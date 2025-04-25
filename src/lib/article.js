@@ -1,19 +1,22 @@
-export const getArticle = async (id) => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/board/${id}`);
+export const getArticle = async (articleId) => {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/articles/${articleId}`
+  );
   const data = await res.json();
+  console.log(data);
   return data;
 };
 
-export const getAllArticles = async (search = "", order = "asc") => {
+export const getAllArticles = async (search = "", order = "recent") => {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/board?search=${search}&orderBy=${order}`
+    `${process.env.NEXT_PUBLIC_API_URL}/articles?keyword=${search}&orderBy=${order}`
   );
   const data = await res.json();
-  return data;
+  return data.list;
 };
 
 export const postArticle = async (articleData) => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/board`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/articles`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -27,9 +30,9 @@ export const postArticle = async (articleData) => {
   return data;
 };
 
-export const patchArticle = async (id, articleData) => {
+export const patchArticle = async (articleId, articleData) => {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/board/${id}`,
+    `${process.env.NEXT_PUBLIC_API_URL}/articles/${articleId}`,
     {
       method: "PATCH",
       headers: {
@@ -45,9 +48,9 @@ export const patchArticle = async (id, articleData) => {
   return data;
 };
 
-export const deleteArticle = async (id) => {
+export const deleteArticle = async (articleId) => {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/board/${id}`,
+    `${process.env.NEXT_PUBLIC_API_URL}/articles/${articleId}`,
     {
       method: "DELETE",
     }

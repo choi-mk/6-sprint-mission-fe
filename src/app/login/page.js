@@ -6,7 +6,7 @@ export default async function LoginPage() {
   return (
     <div className="w-full px-4 flex flex-col items-center py-6 gap-6">
       <Logo />
-      <SignForm isSignin={false} />
+      <SignForm isSignup={false} />
       <SimpleLogin />
 
       <div className="flex">

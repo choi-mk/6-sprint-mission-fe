@@ -1,4 +1,5 @@
 "use client";
+import { useAuth } from "@/providers/AuthProvider";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
@@ -7,6 +8,7 @@ function Header() {
   const pathname = usePathname();
   const isBoard = pathname === "/board" || pathname === "/board/post";
   const isItems = pathname === "/items";
+  const { user } = useAuth();
   return (
     <div className="flex justify-center w-full">
       <div className="h-17 border-b border-gray-200 flex justify-between max-w-400 w-full items-center px-4">
@@ -41,9 +43,18 @@ function Header() {
             </Link>
           </div>
         </div>
-        <button className="bg-primary-100 h-10.5 w-22 text-white rounded-lg">
-          로그인
-        </button>
+        {user ? (
+          <div className="flex gap-2 items-center">
+            <img src="/assets/ic/ic_profile.png" className="w-10 h-10" />
+            <p className="text-gray-600">{user.nickname}</p>
+          </div>
+        ) : (
+          <Link href="/login">
+            <button className="bg-primary-100 h-10.5 w-22 text-white rounded-lg">
+              로그인
+            </button>
+          </Link>
+        )}
       </div>
     </div>
   );

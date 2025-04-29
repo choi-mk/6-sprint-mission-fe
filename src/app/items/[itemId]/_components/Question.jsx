@@ -1,4 +1,5 @@
 "use client";
+import Dropdown from "@/components/Dropdown";
 import useOutsideClick from "@/hook/useOutsideClick";
 import React, { useState } from "react";
 
@@ -34,8 +35,9 @@ function Question({ dcontent, questionId, itemId }) {
                 className="absolute right-0 top-full mt-2 z-50"
               >
                 <Dropdown
-                  articleId={articleId}
-                  commentId={commentId}
+                  type={"item"}
+                  Id={itemId}
+                  commentId={questionId}
                   setIsEdit={setIsEdit}
                 />
               </div>

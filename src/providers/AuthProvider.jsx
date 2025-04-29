@@ -23,6 +23,7 @@ function AuthProvider({ children }) {
   const getUser = async () => {
     try {
       let res = await userService.getMe();
+      console.log(localStorage.getItem("accessToken"));
       if (res.status === 401) {
         console.log(localStorage.getItem("refreshToken"));
         const refreshRes = await authService.refresh(

@@ -61,3 +61,37 @@ export const deleteProduct = async (productId) => {
   const data = await res.json();
   return data;
 };
+
+export const postProductFavorite = async (productId) => {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/products/${productId}/favorite`,
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
+    }
+  );
+  if (!res.ok) {
+    throw new Error("Failed to post product");
+  }
+  const data = await res.json();
+  return data;
+};
+
+export const deleteProductFavorite = async (productId) => {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/products/${productId}/favorite`,
+    {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
+    }
+  );
+  if (!res.ok) {
+    throw new Error("Failed to post product");
+  }
+  const data = await res.json();
+  return data;
+};

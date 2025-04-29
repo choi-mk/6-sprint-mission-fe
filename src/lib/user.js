@@ -5,4 +5,6 @@ export const userService = {
         Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
       },
     }),
+  getFavorites: () =>
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/me/favorites`),
 };

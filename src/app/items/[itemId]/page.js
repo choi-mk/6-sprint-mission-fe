@@ -2,14 +2,14 @@ import ItemDetail from "./_components/ItemDetail";
 import QuestionForm from "./_components/QuestionForm";
 import QuestionList from "./_components/QuestionList";
 
-export default async function ItemDetailPage() {
-  const questions = [];
-  const itemId = 1;
+export default async function ItemDetailPage({ params }) {
+  const { itemId } = await params;
+
   return (
     <div className="px-4 flex justify-center flex-col py-4 items-center">
-      <ItemDetail />
+      <ItemDetail itemId={itemId} />
       <QuestionForm />
-      <QuestionList questions={questions} itemId={itemId} />
+      <QuestionList itemId={itemId} />
     </div>
   );
 }

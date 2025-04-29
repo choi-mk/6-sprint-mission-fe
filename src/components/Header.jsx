@@ -6,7 +6,7 @@ import React from "react";
 
 function Header() {
   const pathname = usePathname();
-  const isBoard = pathname === "/board" || pathname === "/board/post";
+  const isBoard = pathname === "/articles" || pathname === "/articles/post";
   const isItems = pathname === "/items";
   const { user } = useAuth();
   return (
@@ -23,7 +23,7 @@ function Header() {
             </p>
           </Link>
           <div className="flex gap-2 items-center">
-            <Link href="/board">
+            <Link href="/articles">
               <p
                 className={`font-bold md:px-4 ${
                   isBoard ? "text-primary-100" : "text-gray-600"

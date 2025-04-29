@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import useOutsideClick from "@/hook/useOutsideClick";
 import Dropdown from "@/components/Dropdown";
 
@@ -24,7 +24,7 @@ function ArticleDetail({ title, content, articleId }) {
               ref={dropDownRef}
               className="absolute right-0 top-full mt-2 z-50"
             >
-              <Dropdown articleId={articleId} />
+              <Dropdown type={"article"} Id={articleId} />
             </div>
           )}
         </div>

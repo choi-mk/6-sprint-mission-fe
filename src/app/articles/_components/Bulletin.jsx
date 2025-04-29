@@ -46,7 +46,7 @@ function Bulletin() {
             <Link
               className="w-full"
               key={article.id}
-              href={`/board/${article.id}`}
+              href={`/articles/${article.id}`}
             >
               <Article title={article.title} />
             </Link>

@@ -1,25 +1,36 @@
 "use client";
-import { deleteArticle, patchArticle } from "@/lib/article";
+import Item from "@/app/items/_components/Item";
+import { deleteArticle } from "@/lib/article";
 import { deleteComment } from "@/lib/comment";
 import { useRouter } from "next/navigation";
 
 import React from "react";
 
-function Dropdown({ articleId, commentId = null, setIsEdit = null }) {
+function Dropdown({
+  type,
+  Id,
+  commentId = null,
+  setIsEdit = null,
+  setIsModalOpen = null,
+}) {
   const router = useRouter();
 
   const handleClickDelete = async (e) => {
-    if (!commentId) {
-      await deleteArticle(articleId);
-      router.push("/board");
+    if (!commentId && type === "article") {
+      await deleteArticle(Id);
+      router.push("/articles");
+    } else if (!commentId && type === "item") {
+      setIsModalOpen(true);
     } else {
-      const delComment = await deleteComment(commentId);
+      await deleteComment(commentId);
       window.location.reload();
     }
   };
   const handleClickPatch = async (e) => {
-    if (!commentId) {
-      router.push(`/board/post/${articleId}`);
+    if (!commentId && type === "article") {
+      router.push(`/articles/post/${Id}`);
+    } else if (!commentId && type === "item") {
+      router.push(`/items/post/${Id}`);
     } else {
       setIsEdit(true);
     }

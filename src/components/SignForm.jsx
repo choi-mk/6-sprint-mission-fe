@@ -1,36 +1,20 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import { Eye, EyeOff } from "lucide-react";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { authService } from "@/lib/auth";
 import ErrorModal from "./ErrorModal";
 import { useAuth } from "@/providers/AuthProvider";
+import useValidation from "@/hook/useValidation";
+import SignInput from "./SignInput";
 
 function SignForm({ isSignup }) {
-  const [formData, setFormData] = useState(
-    isSignup
-      ? {
-          email: "",
-          nickname: "",
-          password: "",
-          passwordConfirmation: "",
-        }
-      : {
-          email: "",
-          password: "",
-        }
-  );
-  const [errors, setErrors] = useState({});
   const [showPassword, setShowPassword] = useState({});
-  const [isValid, setIsValid] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const router = useRouter();
-  const { user, getUser } = useAuth();
+  const { getUser } = useAuth();
 
-  const validEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-
+  const { formData, errors, isValid, handleChange } = useValidation(isSignup);
   const handleSubmit = async (e) => {
-    console.log("확인");
     e.preventDefault();
 
     try {
@@ -57,64 +41,30 @@ function SignForm({ isSignup }) {
     }
   };
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-    let message = "";
-    if (name === "email") {
-      if (value.trim() === "") {
-        message = "이메일을 입력해주세요.";
-      } else if (!validEmail(value)) {
-        message = "잘못된 이메일 형식입니다.";
-      }
-    } else if (name === "nickname") {
-      if (value.trim() === "") {
-        message = "닉네임을 입력해주세요.";
-      }
-    } else if (name === "password") {
-      if (value.trim() === "") {
-        message = "비밀번호를 입력해주세요.";
-      } else if (value.length < 8) {
-        message = "비밀번호를 8자 이상 입력해주세요.";
-      }
-    } else if (name === "passwordConfirmation") {
-      if (value.trim() === "") {
-        message = "비밀번호를 다시 한번 입력해주세요.";
-      } else if (value !== formData.password) {
-        message = "비밀번호가 일치하지 않습니다.";
-      }
-    }
-    setErrors((prev) => ({ ...prev, [name]: message }));
-  };
-
-  useEffect(() => {
-    const isFormValid =
-      Object.values(errors).every((msg) => msg === "") &&
-      Object.values(formData).every((data) => data.trim() !== "");
-
-    setIsValid(isFormValid);
-  }, [formData, errors]);
-
   // const handleBlur = (e) => {};
   const fields = isSignup
     ? [
         {
           name: "email",
+          label: "이메일",
           placeholder: "이메일을 입력해주세요",
           isPassword: false,
         },
         {
           name: "nickname",
+          label: "닉네임",
           placeholder: "닉네임을 입력해주세요",
           isPassword: false,
         },
         {
           name: "password",
+          label: "비밀번호",
           placeholder: "비밀번호를 입력해주세요",
           isPassword: true,
         },
         {
           name: "passwordConfirmation",
+          label: "비밀번호 확인",
           placeholder: "비밀번호를 다시 한 번 입력해주세요",
           isPassword: true,
         },
@@ -122,34 +72,29 @@ function SignForm({ isSignup }) {
     : [
         {
           name: "email",
+          label: "이메일",
           placeholder: "이메일을 입력해주세요",
           isPassword: false,
         },
         {
           name: "password",
+          label: "비밀번호",
           placeholder: "비밀번호를 입력해주세요",
           isPassword: true,
         },
       ];
   return (
     <div className="w-full">
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+      <form className="flex flex-col gap-4">
         {fields.map((field) => (
-          <div key={field.name}>
-            <label className="font-bold">{field.name}</label>
-            <input
-              name={field.name}
-              onChange={handleChange}
-              placeholder={field.placeholder}
-              className={`bg-gray-100 rounded-xl w-full px-6 py-4 ${
-                errors[field.name] ? "border border-red-500" : ""
-              }`}
-              // onBlur={handleBlur}
-            />
-            <div className="text-red-500 font-semibold ml-4">
-              {errors[field.name]}
-            </div>
-          </div>
+          <SignInput
+            key={field.name}
+            field={field}
+            errors={errors}
+            handleChange={handleChange}
+            showPassword={showPassword}
+            setShowPassword={setShowPassword}
+          />
         ))}
       </form>
       <button

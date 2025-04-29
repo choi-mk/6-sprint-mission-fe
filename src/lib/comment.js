@@ -1,14 +1,14 @@
-export const getAllComments = async (articleId, limit = 10) => {
+export const getAllComments = async (object, Id, limit = 10) => {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/articles/${articleId}/comments?limit=${limit}`
+    `${process.env.NEXT_PUBLIC_API_URL}/${object}/${Id}/comments?limit=${limit}`
   );
   const data = await res.json();
   return data.list;
 };
 
-export const postComment = async (articleId, commentData) => {
+export const postComment = async (object, Id, commentData) => {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/articles/${articleId}/comments`,
+    `${process.env.NEXT_PUBLIC_API_URL}/${object}/${Id}/comments`,
     {
       method: "POST",
       headers: {

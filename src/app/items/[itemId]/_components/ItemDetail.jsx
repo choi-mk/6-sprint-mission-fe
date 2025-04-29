@@ -1,7 +1,49 @@
-import React from "react";
+"use client";
+import { useQuery } from "@tanstack/react-query";
+import React, { useEffect, useState } from "react";
+import {
+  deleteProductFavorite,
+  getProduct,
+  postProductFavorite,
+} from "@/lib/product";
+import DeleteModal from "@/components/DeleteModal";
+import useOutsideClick from "@/hook/useOutsideClick";
+import Dropdown from "@/components/Dropdown";
+import { useAuth } from "@/providers/AuthProvider";
 
-function ItemDetail() {
-  const tags = ["아이패드미니", "애플", "가성비"];
+function ItemDetail({ itemId }) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { isOpen, setIsOpen, dropDownRef } = useOutsideClick();
+  const [isMine, setIsMine] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(false);
+  const { user } = useAuth();
+  const { data: item, isLoading } = useQuery({
+    queryKey: ["product", itemId],
+    queryFn: () => getProduct(itemId),
+  });
+  useEffect(() => {
+    if (item && user) {
+      setIsMine(item.ownerId === user.id);
+    }
+    console.log(isMine);
+  }, [item, user]);
+  if (isLoading) {
+    return <div>로딩중...</div>;
+  }
+  const handleClick = () => {
+    setIsOpen((prev) => !prev);
+  };
+  const handleClickHeart = () => {
+    if (user) {
+      if (isFavorite) {
+        deleteProductFavorite(itemId);
+      } else {
+        postProductFavorite(itemId);
+      }
+      setIsFavorite((prev) => !prev);
+    }
+  };
+
   return (
     <div className="flex flex-col gap-4 w-full items-center">
       <img
@@ -9,21 +51,43 @@ function ItemDetail() {
         className="w-[343px] h-[343px] object-cover rounded-xl"
       />
       <div className="border-b border-gray-200 pb-6 w-full">
-        <div className="border-b border-gray-200 pb-4 flex flex-col gap-2">
-          <p className="text-gray-800 font-semibold text-lg">
-            아이패드 미니 팔아요
-          </p>
-          <p className="text-gray-800 font-semibold text-2xl">500000원</p>
+        <div className="border-b border-gray-200 pb-4 flex justify-between">
+          <div className="flex flex-col gap-2">
+            <p className="text-gray-800 font-semibold text-lg">{item.name}</p>
+            <p className="text-gray-800 font-semibold text-2xl">{item.price}</p>
+          </div>
+          {isMine && (
+            <div className=" relative h-4">
+              <div
+                className="w-3 h-4 flex justify-center z-50"
+                onClick={handleClick}
+              >
+                <img className="w-1 h-4" src="/assets/ic/ic_setting.png" />
+              </div>
+              {isOpen && ( //작성자만 이미지 뜨게 변경
+                <div
+                  ref={dropDownRef}
+                  className="absolute right-0 top-full mt-2 z-100"
+                >
+                  <Dropdown
+                    type={"item"}
+                    Id={itemId}
+                    setIsModalOpen={setIsModalOpen}
+                  />
+                </div>
+              )}
+            </div>
+          )}
         </div>
         <div>
           <div className="mt-4">
             <p className="text-gray-800 font-semibold">상품 소개</p>
-            <p className="text-gray-800 mt-2">description</p>
+            <p className="text-gray-800 mt-2">{item.description}</p>
           </div>
           <div className="mt-8">
             <p className="text-gray-800 font-semibold">상품 태그</p>
             <div className="flex gap-2 mt-2">
-              {tags.map((tag) => (
+              {item.tags.map((tag) => (
                 <div
                   key={tag}
                   className="bg-gray-100 py-1 px-4 rounded-2xl text-gray-800"
@@ -42,14 +106,24 @@ function ItemDetail() {
               <p className="text-gray-400">2024.01.02</p>
             </div>
           </div>
-          <div className="border-l border-gray-200 pl-6">
+          <div
+            className="border-l border-gray-200 pl-6"
+            onClick={handleClickHeart}
+          >
             <div className="border border-gray-200 rounded-2xl flex py-1 px-3 justify-center items-center gap-1">
-              <img src="/assets/ic/ic_heart.png" className="w-5 h-4.5" />
-              123
+              {isFavorite ? (
+                <img src="/assets/ic/ic_full_heart.png" className="w-5 h-4.5" />
+              ) : (
+                <img src="/assets/ic/ic_heart.png" className="w-5 h-4.5" />
+              )}
+              {item.favoriteCount}
             </div>
           </div>
         </div>
       </div>
+      {isModalOpen && (
+        <DeleteModal setIsModalOpen={setIsModalOpen} itemId={itemId} />
+      )}
     </div>
   );
 }

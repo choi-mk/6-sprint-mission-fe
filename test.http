@@ -19,3 +19,7 @@ Content-Type:application/json
 {
     "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTA3Nywic2NvcGUiOiJyZWZyZXNoIiwiaWF0IjoxNzQ1NTQ4NTM5LCJleHAiOjE3NDYxNTMzMzksImlzcyI6InNwLXBhbmRhLW1hcmtldCJ9.-5Vx16NVsHUp6rEqupV-dEV40AJRhUzGARljZw0iXTs"
 }
+
+###
+POST https://panda-market-api.vercel.app/products/703/favorite
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEwNywic2NvcGUiOiJhY2Nlc3MiLCJpYXQiOjE3NDU4MjE5MTUsImV4cCI6MTc0NTgyMzcxNSwiaXNzIjoic3AtcGFuZGEtbWFya2V0In0.Qo0-ozIxSnOare9IWO8JyycXu5yvCEqukgVcxYRJviY

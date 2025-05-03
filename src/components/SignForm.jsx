@@ -18,7 +18,7 @@ function SignForm({ isSignup }) {
     e.preventDefault();
 
     try {
-      const res = isSignup
+      let res = isSignup
         ? await authService.register(
             formData.email,
             formData.nickname,
@@ -26,22 +26,31 @@ function SignForm({ isSignup }) {
             formData.passwordConfirmation
           )
         : await authService.login(formData.email, formData.password);
-      const data = await res.json();
+      let data = await res.json();
       if (!res.ok) {
         throw new Error(data.message);
+      } else if (res.ok && isSignup) {
+        res = await authService.login(formData.email, formData.password);
+        data = await res.json();
+        console.log(data, "data");
+        if (!res.ok) {
+          throw new Error(data.message);
+        }
       }
-
+      console.log(data, "data");
       localStorage.setItem("accessToken", data.accessToken);
       localStorage.setItem("refreshToken", data.refreshToken);
       getUser();
-
-      router.push("/items");
+      if (isSignup) {
+        setErrorMessage("가입 완료되었습니다.");
+      } else {
+        router.push("/items");
+      }
     } catch (e) {
       setErrorMessage(e.message);
     }
   };
 
-  // const handleBlur = (e) => {};
   const fields = isSignup
     ? [
         {
@@ -110,6 +119,7 @@ function SignForm({ isSignup }) {
         <ErrorModal
           errorMessage={errorMessage}
           setErrorMessage={setErrorMessage}
+          onConfirm={() => router.push("/items")}
         />
       )}
     </div>

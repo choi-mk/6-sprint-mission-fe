@@ -6,9 +6,9 @@ export default async function ItemDetailPage({ params }) {
   const { itemId } = await params;
 
   return (
-    <div className="px-4 flex justify-center flex-col py-4 items-center">
+    <div className="px-4 flex justify-center flex-col py-4 items-center md:py-6">
       <ItemDetail itemId={itemId} />
-      <QuestionForm />
+      <QuestionForm itemId={itemId} />
       <QuestionList itemId={itemId} />
     </div>
   );

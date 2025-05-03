@@ -2,13 +2,19 @@
 import { useAuth } from "@/providers/AuthProvider";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React from "react";
+import React, { useState } from "react";
+import LogoutModal from "./LogoutModal";
 
 function Header() {
   const pathname = usePathname();
   const isBoard = pathname === "/articles" || pathname === "/articles/post";
   const isItems = pathname === "/items";
   const { user } = useAuth();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const handleClickLogout = () => {
+    setIsModalOpen((prev) => !prev);
+  };
+  console.log("user", user);
   return (
     <div className="flex justify-center w-full">
       <div className="h-17 border-b border-gray-200 flex justify-between max-w-400 w-full items-center px-4">
@@ -44,7 +50,7 @@ function Header() {
           </div>
         </div>
         {user ? (
-          <div className="flex gap-2 items-center">
+          <div className="flex gap-2 items-center" onClick={handleClickLogout}>
             <img src="/assets/ic/ic_profile.png" className="w-10 h-10" />
             <p className="text-gray-600">{user.nickname}</p>
           </div>
@@ -56,6 +62,7 @@ function Header() {
           </Link>
         )}
       </div>
+      {isModalOpen && <LogoutModal setIsModalOpen={setIsModalOpen} />}
     </div>
   );
 }

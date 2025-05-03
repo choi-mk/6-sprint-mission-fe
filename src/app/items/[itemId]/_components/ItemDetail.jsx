@@ -12,20 +12,26 @@ import Dropdown from "@/components/Dropdown";
 import { useAuth } from "@/providers/AuthProvider";
 
 function ItemDetail({ itemId }) {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const { isOpen, setIsOpen, dropDownRef } = useOutsideClick();
-  const [isMine, setIsMine] = useState(false);
-  const [isFavorite, setIsFavorite] = useState(false);
-  const { user } = useAuth();
   const { data: item, isLoading } = useQuery({
     queryKey: ["product", itemId],
     queryFn: () => getProduct(itemId),
   });
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { isOpen, setIsOpen, dropDownRef } = useOutsideClick();
+  const [isMine, setIsMine] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(false);
+  const [favoriteCount, setFavoriteCount] = useState(0);
+  const { user } = useAuth();
+
   useEffect(() => {
     if (item && user) {
       setIsMine(item.ownerId === user.id);
     }
-    console.log(isMine);
+    if (item) {
+      console.log(item);
+      setIsFavorite(item.isFavorite);
+      setFavoriteCount(item.favoriteCount);
+    }
   }, [item, user]);
   if (isLoading) {
     return <div>로딩중...</div>;
@@ -33,19 +39,21 @@ function ItemDetail({ itemId }) {
   const handleClick = () => {
     setIsOpen((prev) => !prev);
   };
-  const handleClickHeart = () => {
+  const handleClickHeart = async () => {
     if (user) {
+      let updatedItem;
       if (isFavorite) {
-        deleteProductFavorite(itemId);
+        updatedItem = await deleteProductFavorite(itemId);
       } else {
-        postProductFavorite(itemId);
+        updatedItem = await postProductFavorite(itemId);
       }
+      setFavoriteCount(updatedItem.favoriteCount);
       setIsFavorite((prev) => !prev);
     }
   };
 
   return (
-    <div className="flex flex-col gap-4 w-full items-center">
+    <div className="flex flex-col gap-4 w-full items-center md:flex-row md:items-start">
       <img
         src="/assets/img/img_item_detail.png"
         className="w-[343px] h-[343px] object-cover rounded-xl"
@@ -64,7 +72,7 @@ function ItemDetail({ itemId }) {
               >
                 <img className="w-1 h-4" src="/assets/ic/ic_setting.png" />
               </div>
-              {isOpen && ( //작성자만 이미지 뜨게 변경
+              {isOpen && (
                 <div
                   ref={dropDownRef}
                   className="absolute right-0 top-full mt-2 z-100"
@@ -116,7 +124,7 @@ function ItemDetail({ itemId }) {
               ) : (
                 <img src="/assets/ic/ic_heart.png" className="w-5 h-4.5" />
               )}
-              {item.favoriteCount}
+              {favoriteCount}
             </div>
           </div>
         </div>

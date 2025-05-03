@@ -1,97 +1,141 @@
 export const getProduct = async (productId) => {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/products/${productId}`
-  );
-  const data = await res.json();
-  console.log(data);
-  return data;
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/products/${productId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+      }
+    );
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.error("상품 정보를 가져오는 데 실패했습니다:", error);
+    throw error;
+  }
 };
 
 export const getAllProducts = async (search = "", order = "recent") => {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/products?keyword=${search}&orderBy=${order}`
-  );
-  const data = await res.json();
-  return data.list;
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/products?keyword=${search}&orderBy=${order}`
+    );
+    const data = await res.json();
+    return data.list;
+  } catch (error) {
+    console.error("상품 목록을 가져오는 데 실패했습니다:", error);
+    throw error;
+  }
 };
 
 export const postProduct = async (productData) => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/products`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(productData),
-  });
-  if (!res.ok) {
-    throw new Error("Failed to post product");
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/products`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
+      body: JSON.stringify(productData),
+    });
+    const data = await res.json();
+    if (!res.ok) {
+      throw new Error(data.message);
+    }
+    return data;
+  } catch (error) {
+    console.error("상품 등록에 실패했습니다:", error);
+    throw error;
   }
-  const data = await res.json();
-  return data;
 };
 
 export const patchProduct = async (productId, productData) => {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/products/${productId}`,
-    {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(productData),
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/products/${productId}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+        body: JSON.stringify(productData),
+      }
+    );
+    const data = await res.json();
+    if (!res.ok) {
+      throw new Error(data.message);
     }
-  );
-  if (!res.ok) {
-    throw new Error("Failed to patch product");
+    return data;
+  } catch (error) {
+    console.error("상품 수정에 실패했습니다:", error);
+    throw error;
   }
-  const data = await res.json();
-  return data;
 };
 
 export const deleteProduct = async (productId) => {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/products/${productId}`,
-    {
-      method: "DELETE",
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/products/${productId}`,
+      {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+      }
+    );
+    const data = await res.json();
+    if (!res.ok) {
+      throw new Error(data.message || "Failed to delete product");
     }
-  );
-  if (!res.ok) {
-    throw new Error("Failed to delete product");
+    return data;
+  } catch (error) {
+    console.error("상품 삭제에 실패했습니다:", error);
+    throw error;
   }
-  const data = await res.json();
-  return data;
 };
 
 export const postProductFavorite = async (productId) => {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/products/${productId}/favorite`,
-    {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-      },
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/products/${productId}/favorite`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+      }
+    );
+    const data = await res.json();
+    if (!res.ok) {
+      throw new Error(data.message || "Failed to add favorite");
     }
-  );
-  if (!res.ok) {
-    throw new Error("Failed to post product");
+    return data;
+  } catch (error) {
+    console.error("상품 찜 등록에 실패했습니다:", error);
+    throw error;
   }
-  const data = await res.json();
-  return data;
 };
 
 export const deleteProductFavorite = async (productId) => {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/products/${productId}/favorite`,
-    {
-      method: "DELETE",
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-      },
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/products/${productId}/favorite`,
+      {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+      }
+    );
+    const data = await res.json();
+    if (!res.ok) {
+      throw new Error(data.message || "Failed to remove favorite");
     }
-  );
-  if (!res.ok) {
-    throw new Error("Failed to post product");
+    return data;
+  } catch (error) {
+    console.error("상품 찜 해제에 실패했습니다:", error);
+    throw error;
   }
-  const data = await res.json();
-  return data;
 };

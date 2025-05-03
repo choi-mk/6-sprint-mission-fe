@@ -27,12 +27,7 @@ function QuestionList({ itemId }) {
   return !isEmpty ? (
     <div className="mt-6 flex flex-col gap-4 w-full ">
       {questions.map((question) => (
-        <Question
-          key={question.id}
-          dcontent={question.content}
-          questionId={question.id}
-          itemId={itemId}
-        />
+        <Question key={question.id} question={question} itemId={itemId} />
       ))}
     </div>
   ) : (

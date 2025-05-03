@@ -6,6 +6,7 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 
 const AuthContext = createContext({
   user: null,
+  isLoading: true,
   getUser: () => {},
   logout: () => {},
 });
@@ -20,38 +21,45 @@ export const useAuth = () => {
 
 function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
   const getUser = async () => {
     try {
+      setIsLoading(true);
       let res = await userService.getMe();
-      console.log(localStorage.getItem("accessToken"));
-      if (res.status === 401) {
-        console.log(localStorage.getItem("refreshToken"));
-        const refreshRes = await authService.refresh(
-          localStorage.getItem("refreshToken")
-        );
+      const refreshToken = localStorage.getItem("refreshToken");
+      if (!refreshToken) {
+        setUser(null);
+      } else if (res.status === 401 && refreshToken) {
+        const refreshRes = await authService.refresh(refreshToken);
         if (refreshRes.ok) {
-          const data = await refreshRes.json();
-          localStorage.setItem("accessToken", data.accessToken);
+          const refreshData = await refreshRes.json();
+          localStorage.setItem("accessToken", refreshData.accessToken);
+          res = await userService.getMe();
+          const data = await res.json();
+          setUser(data);
         }
+      } else {
         res = await userService.getMe();
+        const data = await res.json();
+        setUser(data);
       }
-      const data = await res.json();
-      console.log("user:", data);
-      setUser(data);
     } catch (error) {
       console.error("사용자 정보를 가져오는데 실패했습니다", error);
       setUser(null);
+    } finally {
+      setIsLoading(false);
     }
   };
   const logout = () => {
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
     setUser(null);
-    localStorage.clear();
   };
   useEffect(() => {
     getUser();
   }, []);
   return (
-    <AuthContext.Provider value={{ user, getUser, logout }}>
+    <AuthContext.Provider value={{ user, isLoading, getUser, logout }}>
       {children}
     </AuthContext.Provider>
   );

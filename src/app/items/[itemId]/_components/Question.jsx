@@ -1,19 +1,37 @@
 "use client";
 import Dropdown from "@/components/Dropdown";
 import useOutsideClick from "@/hook/useOutsideClick";
-import React, { useState } from "react";
+import { patchComment } from "@/lib/comment";
+import { useAuth } from "@/providers/AuthProvider";
+import React, { useEffect, useState } from "react";
 
-function Question({ dcontent, questionId, itemId }) {
+function Question({ question, itemId }) {
   const { isOpen, setIsOpen, dropDownRef } = useOutsideClick();
   const [isEdit, setIsEdit] = useState(false);
-  const [content, setContent] = useState(dcontent);
+  const [content, setContent] = useState(question.content);
+  const [isMine, setIsMine] = useState(false);
+  const { user } = useAuth();
+  console.log(question.writer);
+
+  useEffect(() => {
+    if (user && question) {
+      setIsMine(question.writer.id === user.id);
+    }
+  }, [user, question]);
+
   const handleClick = () => {
     setIsOpen((prev) => !prev);
   };
   const handleClickCancel = () => {
     setIsEdit(false);
   };
-  const handleClickEdit = async () => {};
+  const handleClickEdit = async () => {
+    await patchComment(question.id, {
+      content,
+    });
+    setIsEdit(false);
+    setIsOpen(false);
+  };
   return (
     <div className="border-b border-gray-200 h-auto pb-3">
       {isEdit ? (
@@ -24,32 +42,37 @@ function Question({ dcontent, questionId, itemId }) {
         />
       ) : (
         <div className="flex justify-between">
-          <p>{dcontent}</p>
-          <div className="relative h-4">
-            <div className="w-3 h-4 flex justify-center" onClick={handleClick}>
-              <img className="w-1 h-4" src="/assets/ic/ic_setting.png" />
-            </div>
-            {isOpen && (
+          <p>{content}</p>
+          {isMine && (
+            <div className="relative h-4">
               <div
-                ref={dropDownRef}
-                className="absolute right-0 top-full mt-2 z-50"
+                className="w-3 h-4 flex justify-center"
+                onClick={handleClick}
               >
-                <Dropdown
-                  type={"item"}
-                  Id={itemId}
-                  commentId={questionId}
-                  setIsEdit={setIsEdit}
-                />
+                <img className="w-1 h-4" src="/assets/ic/ic_setting.png" />
               </div>
-            )}
-          </div>
+              {isOpen && (
+                <div
+                  ref={dropDownRef}
+                  className="absolute right-0 top-full mt-2 z-50"
+                >
+                  <Dropdown
+                    type={"item"}
+                    Id={itemId}
+                    commentId={question.id}
+                    setIsEdit={setIsEdit}
+                  />
+                </div>
+              )}
+            </div>
+          )}
         </div>
       )}
       <div className="mt-6 flex justify-between">
         <div className="flex">
           <img src="/assets/ic/ic_profile.png" className="w-8 h-8" />
           <div className="ml-2">
-            <p className="text-gray-600 text-xs">똑똑한 판다</p>
+            <p className="text-gray-600 text-xs">{question.writer.nickname}</p>
             <p className="text-gray-400 text-xs">1시간 전</p>
           </div>
         </div>

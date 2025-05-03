@@ -7,7 +7,7 @@ import { patchProduct, postProduct } from "@/lib/product";
 function ItemForm({
   dname = "",
   ddescription = "",
-  dprice,
+  dprice = 0,
   dtags = [],
   itemId = null,
 }) {
@@ -16,6 +16,7 @@ function ItemForm({
   const [price, setPrice] = useState(dprice);
   const [tags, setTags] = useState(dtags);
   const [tag, setTag] = useState("");
+  const images = ["https://example.com/"];
 
   const router = useRouter();
   const isValid =
@@ -23,7 +24,13 @@ function ItemForm({
   const handleClick = async (e) => {
     e.preventDefault();
     if (!itemId) {
-      const newItem = await postProduct({ name, description, price, tags });
+      const newItem = await postProduct({
+        name,
+        description,
+        price,
+        tags,
+        images,
+      });
       router.push(`/items/${newItem.id}`);
     } else {
       const updatedItem = await patchProduct(itemId, {
@@ -32,11 +39,10 @@ function ItemForm({
         price,
         tags,
       });
-      router.push(`/articles/${itemId}`);
+      router.push(`/items/${itemId}`);
     }
   };
 
-  const handleCancel = () => {};
   return (
     <form className="w-full">
       <div className="flex w-full justify-between">
@@ -77,10 +83,11 @@ function ItemForm({
       <div className="flex flex-col mt-6">
         <label className="text-sm text-gray-800 font-bold">판매가격</label>
         <input
+          type="number"
           className="w-full h-14 bg-gray-100 pl-6 rounded-lg"
           placeholder="판매 가격을 입력해주세요"
           value={price}
-          onChange={(e) => setName(e.target.value)}
+          onChange={(e) => setPrice(Number(e.target.value))}
         />
       </div>
       <div className="flex flex-col mt-6">
@@ -89,18 +96,32 @@ function ItemForm({
           className="w-full h-14 bg-gray-100 pl-6 rounded-lg"
           placeholder="태그를 입력해주세요"
           value={tag}
-          onChange={(e) => setName(e.target.value)}
+          onChange={(e) => setTag(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              e.preventDefault();
+              if (tag.trim() !== "") {
+                setTags((prev) => [...prev, tag.trim()]);
+                setTag("");
+              }
+            }
+          }}
         />
       </div>
-      <div>
-        {tags.map((tag) => (
-          <div className="py-1 px-3" key={tag}>
-            <p>#{tag}</p>
+      <div className="mt-4 flex gap-3">
+        {tags.map((tagItem) => (
+          <div
+            className="py-1 px-3 bg-gray-100 flex rounded-2xl gap-2 items-center"
+            key={tagItem}
+          >
+            <p>#{tagItem}</p>
             <div
-              className="w-5 h-5 rounded-full bg-gray-400"
-              onClick={handleCancel}
+              className="w-5 h-5 rounded-full bg-gray-400 flex justify-center items-center"
+              onClick={() =>
+                setTags((prev) => prev.filter((t) => t !== tagItem))
+              }
             >
-              <img src="/assets/ic/ic_cancel.png" />
+              <img src="/assets/ic/ic_cancel.png" className="w-2 h-2" />
             </div>
           </div>
         ))}

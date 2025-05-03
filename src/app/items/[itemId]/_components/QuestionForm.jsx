@@ -1,9 +1,15 @@
 "use client";
+import { postComment } from "@/lib/comment";
 import React, { useState } from "react";
 
-function QuestionForm() {
+function QuestionForm({ itemId }) {
   const [content, setContent] = useState("");
-  const handleClick = async () => {};
+  const handleClick = async () => {
+    const newQuestion = await postComment("products", itemId, { content });
+    if (newQuestion) {
+      window.location.reload();
+    }
+  };
   const isValid = content.trim() !== "";
   return (
     <div className="mt-8 w-full">

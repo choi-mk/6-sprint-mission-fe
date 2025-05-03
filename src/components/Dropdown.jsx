@@ -1,5 +1,4 @@
 "use client";
-import Item from "@/app/items/_components/Item";
 import { deleteArticle } from "@/lib/article";
 import { deleteComment } from "@/lib/comment";
 import { useRouter } from "next/navigation";
@@ -36,7 +35,7 @@ function Dropdown({
     }
   };
   return (
-    <div className="w-35 h-23 border border-gray-300 rounded-xl flex flex-col items-center justify-evenly text-gray-500 bg-white">
+    <div className="w-26 h-23 border border-gray-300 rounded-xl flex flex-col items-center justify-evenly text-gray-500 bg-white md:w-35">
       <button onClick={handleClickPatch}>수정하기</button>
       <button onClick={handleClickDelete}>삭제하기</button>
     </div>

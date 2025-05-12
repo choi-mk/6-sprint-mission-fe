@@ -6,6 +6,12 @@ export async function GET(req) {
     const url = new URL(req.url);
     const search = url.searchParams.get("search");
     const orderBy = url.searchParams.get("orderBy");
+    let orderByClause;
+    if (orderBy === "recent") {
+      orderByClause = { createdAt: "desc" };
+    } else {
+      orderByClause = { favorite: "desc" };
+    }
 
     const articles = await prisma.article.findMany({
       where: {
@@ -14,9 +20,7 @@ export async function GET(req) {
           mode: "insensitive",
         },
       },
-      orderBy: {
-        createdAt: orderBy,
-      },
+      orderBy: orderByClause,
     });
 
     return NextResponse.json(articles);

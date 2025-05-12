@@ -1,7 +1,5 @@
 "use client";
-
-import { authService } from "@/lib/auth";
-import { userService } from "@/lib/user";
+import { userAPI } from "@/lib/user";
 import React, { createContext, useContext, useEffect, useState } from "react";
 
 const AuthContext = createContext({
@@ -25,21 +23,21 @@ function AuthProvider({ children }) {
   const getUser = async () => {
     try {
       setIsLoading(true);
-      let res = await userService.getMe();
+      let res = await userAPI.getMe();
       const refreshToken = localStorage.getItem("refreshToken");
       if (!refreshToken) {
         setUser(null);
       } else if (res.status === 401 && refreshToken) {
-        const refreshRes = await authService.refresh(refreshToken);
+        const refreshRes = await userAPI.refresh(refreshToken);
         if (refreshRes.ok) {
           const refreshData = await refreshRes.json();
           localStorage.setItem("accessToken", refreshData.accessToken);
-          res = await userService.getMe();
+          res = await userAPI.getMe();
           const data = await res.json();
           setUser(data);
         }
       } else {
-        res = await userService.getMe();
+        res = await userAPI.getMe();
         const data = await res.json();
         setUser(data);
       }

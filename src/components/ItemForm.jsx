@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { patchProduct, postProduct } from "@/lib/product";
 
@@ -16,32 +16,44 @@ function ItemForm({
   const [price, setPrice] = useState(dprice);
   const [tags, setTags] = useState(dtags);
   const [tag, setTag] = useState("");
-  const images = ["https://example.com/"];
+  const [image, setImage] = useState(null);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const router = useRouter();
   const isValid =
     name.trim() !== "" && description.trim() !== "" && price !== 0;
+
   const handleClick = async (e) => {
     e.preventDefault();
     if (!itemId) {
-      const newItem = await postProduct({
-        name,
-        description,
-        price,
-        tags,
-        images,
-      });
+      const formData = new FormData();
+      formData.append("name", name);
+      formData.append("description", description);
+      formData.append("price", price);
+      formData.append("tags", JSON.stringify(tags));
+      if (image) formData.append("image", image);
+      const newItem = await postProduct(formData);
       router.push(`/items/${newItem.id}`);
     } else {
-      const updatedItem = await patchProduct(itemId, {
-        name,
-        description,
-        price,
-        tags,
-      });
+      const formData = new FormData();
+      formData.append("name", name);
+      formData.append("description", description);
+      formData.append("price", price);
+      formData.append("tags", JSON.stringify(tags));
+      if (image) formData.append("image", image);
+
+      const updatedItem = await patchProduct(itemId, formData);
       router.push(`/items/${itemId}`);
     }
   };
+
+  useEffect(() => {
+    if (image === null) {
+      setErrorMessage("");
+    } else {
+      setErrorMessage("*이미지 등록은 최대 1개까지 가능합니다.");
+    }
+  }, [image]);
 
   return (
     <form className="w-full">
@@ -60,7 +72,43 @@ function ItemForm({
       </div>
       <div className="flex flex-col mt-6">
         <label className="text-sm text-gray-800 font-bold">상품 이미지</label>
-        <div className="w-70 h-70 rounded-3xl bg-gray-200"></div>
+        <div className="flex gap-6 mt-4">
+          <input
+            id="imageUpload"
+            className="hidden"
+            type="file"
+            accept="image/*"
+            onChange={(e) => setImage(e.target.files[0])}
+          />
+          <label
+            htmlFor="imageUpload"
+            className="w-70 h-70 bg-gray-200 rounded-2xl flex items-center justify-center cursor-pointer"
+          >
+            <div className="flex flex-col justify-center items-center">
+              <img
+                src="/assets/ic/ic_plus.png"
+                className="w-12 h-12"
+                alt="이미지 등록"
+              />
+              <div className="text-gray-400">이미지 등록</div>
+            </div>
+          </label>
+          {image && (
+            <div className="relative">
+              <img
+                src={URL.createObjectURL(image)}
+                className="w-70 h-70 rounded-2xl object-cover"
+              />
+              <button
+                className="absolute top-1 right-1 z-10 rounded-full bg-gray-400 w-5 h-5 flex justify-center items-center"
+                onClick={(e) => setImage(null)}
+              >
+                <img src="/assets/ic/ic_cancel.png" className="w-2 h-2" />
+              </button>
+            </div>
+          )}
+        </div>
+        <div className="text-error">{errorMessage}</div>
       </div>
       <div className="flex flex-col mt-6">
         <label className="text-sm text-gray-800 font-bold">상품명</label>

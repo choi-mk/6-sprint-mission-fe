@@ -2,17 +2,19 @@
 
 import React, { useEffect, useState } from "react";
 import Question from "./Question";
-import { getAllComments } from "@/lib/comment";
 import { useQuery } from "@tanstack/react-query";
+import { getProduct } from "@/lib/product";
 
 function QuestionList({ itemId }) {
-  const { data: questions = [], isLoading } = useQuery({
-    queryKey: ["comments", itemId],
-    queryFn: () => getAllComments("products", itemId),
+  const { data: product, isLoading } = useQuery({
+    queryKey: ["product", itemId],
+    queryFn: () => getProduct(itemId),
   });
 
   const [isEmpty, setIsEmpty] = useState(false);
 
+  console.log(product);
+  const questions = product?.comments || [];
   useEffect(() => {
     if (questions.length === 0) {
       setIsEmpty(true);

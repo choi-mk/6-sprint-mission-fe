@@ -1,11 +1,11 @@
 "use client";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import { authService } from "@/lib/auth";
 import ErrorModal from "./ErrorModal";
 import { useAuth } from "@/providers/AuthProvider";
 import useValidation from "@/hook/useValidation";
 import SignInput from "./SignInput";
+import { userAPI } from "@/lib/user";
 
 function SignForm({ isSignup }) {
   const [showPassword, setShowPassword] = useState({});
@@ -17,20 +17,21 @@ function SignForm({ isSignup }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const image = "example.com";
     try {
       let res = isSignup
-        ? await authService.register(
+        ? await userAPI.register(
             formData.email,
             formData.nickname,
             formData.password,
-            formData.passwordConfirmation
+            image
           )
-        : await authService.login(formData.email, formData.password);
+        : await userAPI.login(formData.email, formData.password);
       let data = await res.json();
       if (!res.ok) {
         throw new Error(data.message);
       } else if (res.ok && isSignup) {
-        res = await authService.login(formData.email, formData.password);
+        res = await userAPI.login(formData.email, formData.password);
         data = await res.json();
         console.log(data, "data");
         if (!res.ok) {

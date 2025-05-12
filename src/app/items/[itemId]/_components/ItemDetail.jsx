@@ -29,6 +29,7 @@ function ItemDetail({ itemId }) {
     }
     if (item) {
       console.log(item);
+      console.log(item.image);
       setIsFavorite(item.isFavorite);
       setFavoriteCount(item.favoriteCount);
     }
@@ -55,7 +56,10 @@ function ItemDetail({ itemId }) {
   return (
     <div className="flex flex-col gap-4 w-full items-center md:flex-row md:items-start">
       <img
-        src="/assets/img/img_item_detail.png"
+        src={
+          `${process.env.NEXT_PUBLIC_API_URL}${item.image}` ||
+          "/assets/img/img_item_detail.png"
+        }
         className="w-[343px] h-[343px] object-cover rounded-xl"
       />
       <div className="border-b border-gray-200 pb-6 w-full">

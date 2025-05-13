@@ -5,9 +5,7 @@ import Search from "@/components/Search";
 import Link from "next/link";
 import React, { useState } from "react";
 
-function ItemHeader() {
-  const [search, setSearch] = useState("");
-  const [order, setOrder] = useState(false);
+function ItemHeader({ setOrder, setSearch }) {
   return (
     <div className="flex relative h-23 w-full">
       <p className="font-bold text-gray-900 text-xl">판매 중인 상품</p>
@@ -20,7 +18,7 @@ function ItemHeader() {
         </Link>
         <div className="flex gap-3 w-full">
           <Search setSearch={setSearch} />
-          <Orders />
+          <Orders setOrder={setOrder} />
         </div>
       </div>
     </div>

@@ -5,10 +5,7 @@ import Link from "next/link";
 import { getAllProducts } from "@/lib/product";
 import { useQuery } from "@tanstack/react-query";
 
-function ItemList() {
-  const [search, setSearch] = useState("");
-  const [order, setOrder] = useState("recent");
-
+function ItemList({ order, search }) {
   const { data: items = [], isLoading } = useQuery({
     queryKey: ["product", search, order],
     queryFn: () => getAllProducts(search, order),

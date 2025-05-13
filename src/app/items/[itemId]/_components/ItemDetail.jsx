@@ -28,8 +28,6 @@ function ItemDetail({ itemId }) {
       setIsMine(item.ownerId === user.id);
     }
     if (item) {
-      console.log(item);
-      console.log(item.image);
       setIsFavorite(item.isFavorite);
       setFavoriteCount(item.favoriteCount);
     }
@@ -41,15 +39,19 @@ function ItemDetail({ itemId }) {
     setIsOpen((prev) => !prev);
   };
   const handleClickHeart = async () => {
-    if (user) {
-      let updatedItem;
-      if (isFavorite) {
-        updatedItem = await deleteProductFavorite(itemId);
-      } else {
-        updatedItem = await postProductFavorite(itemId);
-      }
+    if (!user) return;
+
+    setIsFavorite((prev) => !prev);
+    setFavoriteCount((prev) => prev + (isFavorite ? -1 : 1));
+
+    try {
+      const updatedItem = isFavorite
+        ? await deleteProductFavorite(itemId)
+        : await postProductFavorite(itemId);
       setFavoriteCount(updatedItem.favoriteCount);
+    } catch (error) {
       setIsFavorite((prev) => !prev);
+      setFavoriteCount((prev) => prev + (isFavorite ? 1 : -1));
     }
   };
 

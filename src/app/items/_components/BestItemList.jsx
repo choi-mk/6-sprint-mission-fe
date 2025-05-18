@@ -23,7 +23,7 @@ function BestItemList() {
   };
 
   const getCount = () => {
-    if (windowWidth >= 1280) return 3;
+    if (windowWidth >= 1280) return 4;
     if (windowWidth >= 768) return 2;
     return 1;
   };

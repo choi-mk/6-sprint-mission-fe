@@ -70,11 +70,10 @@ export const deleteComment = async (commentId) => {
         },
       }
     );
-    const data = await res.json();
     if (!res.ok) {
       throw new Error(data.message);
     }
-    return data;
+    return true;
   } catch (error) {
     console.error("댓글 삭제에 실패했습니다:", error);
     throw error;

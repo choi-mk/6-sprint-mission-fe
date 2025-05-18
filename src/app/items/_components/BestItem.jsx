@@ -3,8 +3,8 @@ import React from "react";
 function BestItem({ item }) {
   const heart = item.favoriteCount;
   return (
-    <div className="flex flex-col gap-2 w-85 h-108">
-      <div className="w-85 h-85">
+    <div className="flex flex-col gap-2 w-85 h-109 lg:w-70 lg:h-94 ">
+      <div className="w-85 h-85 lg:w-70 lg:h-70">
         <img
           className="w-full h-full object-cover"
           src={

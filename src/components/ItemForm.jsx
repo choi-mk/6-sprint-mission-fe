@@ -67,6 +67,7 @@ function ItemForm({ itemId = null }) {
           setDescription(item.description);
           setPrice(item.price);
           setTags(item.tags);
+          setImages(item.images);
         }
       } catch (err) {
         console.error("상품 정보를 불러오는 데 실패했습니다:", err);

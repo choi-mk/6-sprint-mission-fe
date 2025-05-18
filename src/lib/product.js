@@ -87,11 +87,10 @@ export const deleteProduct = async (productId) => {
         },
       }
     );
-    const data = await res.json();
     if (!res.ok) {
       throw new Error(data.message || "Failed to delete product");
     }
-    return data;
+    return res;
   } catch (error) {
     console.error("상품 삭제에 실패했습니다:", error);
     throw error;

@@ -6,7 +6,12 @@ import { useQuery } from "@tanstack/react-query";
 import { getProduct } from "@/lib/product";
 
 function QuestionList({ itemId }) {
-  const { data: product, isLoading } = useQuery({
+  const {
+    data: product,
+    isLoading,
+    isError,
+    error,
+  } = useQuery({
     queryKey: ["product", itemId],
     queryFn: () => getProduct(itemId, localStorage.getItem("accessToken")),
   });
@@ -22,9 +27,9 @@ function QuestionList({ itemId }) {
     }
   }, [questions]);
 
-  if (isLoading) {
-    return <div>로딩중...</div>;
-  }
+  if (isLoading) return <div>로딩중...</div>;
+  if (isError) return <div>{error.message}</div>;
+
   return !isEmpty ? (
     <div className="mt-6 flex flex-col gap-4 w-full ">
       {questions.map((question) => (

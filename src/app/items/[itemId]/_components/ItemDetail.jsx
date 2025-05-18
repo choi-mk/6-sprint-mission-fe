@@ -12,7 +12,12 @@ import Dropdown from "@/components/Dropdown";
 import { useAuth } from "@/providers/AuthProvider";
 
 function ItemDetail({ itemId }) {
-  const { data: item, isLoading } = useQuery({
+  const {
+    data: item,
+    isLoading,
+    isError,
+    error,
+  } = useQuery({
     queryKey: ["product", itemId],
     queryFn: () => getProduct(itemId, localStorage.getItem("accessToken")),
   });
@@ -33,9 +38,10 @@ function ItemDetail({ itemId }) {
       setFavoriteCount(item.favoriteCount);
     }
   }, [item, user]);
-  if (isLoading) {
-    return <div>로딩중...</div>;
-  }
+
+  if (isLoading) return <div>로딩중...</div>;
+  if (isError) return <div>{error.message}</div>;
+
   const handleClick = () => {
     setIsOpen((prev) => !prev);
   };

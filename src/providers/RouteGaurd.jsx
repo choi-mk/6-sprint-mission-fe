@@ -8,7 +8,7 @@ const publicPaths = ["/login", "/signin"];
 
 function RouteGuard({ children }) {
   const { user, isLoading: authLoading } = useAuth();
-  console.log(user);
+
   const router = useRouter();
   const pathname = usePathname();
   const [isLoading, setIsLoading] = useState(true);
@@ -27,7 +27,6 @@ function RouteGuard({ children }) {
     if (isProtectedRoute && !user) {
       router.push("/login");
     } else if (isPublicRoute && user) {
-      console.log(path);
       router.push("/me");
     } else {
       setIsLoading(false);

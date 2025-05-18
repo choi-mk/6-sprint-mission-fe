@@ -33,12 +33,11 @@ function SignForm({ isSignup }) {
       } else if (res.ok && isSignup) {
         res = await userAPI.login(formData.email, formData.password);
         data = await res.json();
-        console.log(data, "data");
         if (!res.ok) {
           throw new Error(data.message);
         }
       }
-      console.log(data, "data");
+
       localStorage.setItem("accessToken", data.accessToken);
       localStorage.setItem("refreshToken", data.refreshToken);
       getUser();

@@ -1,16 +1,15 @@
-export const getProduct = async (productId) => {
+export const getProduct = async (productId, accessToken) => {
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/products/${productId}`,
       {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          Authorization: `Bearer ${accessToken}`,
         },
       }
     );
 
     const data = await res.json();
-    console.log(data);
 
     return data;
   } catch (error) {
@@ -25,7 +24,7 @@ export const getAllProducts = async (search = "", order = "recent") => {
       `${process.env.NEXT_PUBLIC_API_URL}/products?keyword=${search}&orderBy=${order}`
     );
     const data = await res.json();
-    console.log(data);
+
     return data;
   } catch (error) {
     console.error("상품 목록을 가져오는 데 실패했습니다:", error);

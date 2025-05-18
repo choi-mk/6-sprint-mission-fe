@@ -14,7 +14,7 @@ function Header() {
   const handleClickLogout = () => {
     setIsModalOpen((prev) => !prev);
   };
-  console.log("user", user);
+
   return (
     <div className="flex justify-center w-full">
       <div className="h-17 border-b border-gray-200 flex justify-between max-w-400 w-full items-center px-4">

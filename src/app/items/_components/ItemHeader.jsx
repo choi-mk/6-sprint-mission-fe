@@ -1,9 +1,7 @@
-"use client";
-
 import Orders from "@/components/Orders";
 import Search from "@/components/Search";
 import Link from "next/link";
-import React, { useState } from "react";
+import React from "react";
 
 function ItemHeader({ setOrder, setSearch }) {
   return (

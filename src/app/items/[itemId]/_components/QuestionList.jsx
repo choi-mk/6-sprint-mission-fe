@@ -8,12 +8,11 @@ import { getProduct } from "@/lib/product";
 function QuestionList({ itemId }) {
   const { data: product, isLoading } = useQuery({
     queryKey: ["product", itemId],
-    queryFn: () => getProduct(itemId),
+    queryFn: () => getProduct(itemId, localStorage.getItem("accessToken")),
   });
 
   const [isEmpty, setIsEmpty] = useState(false);
 
-  console.log(product);
   const questions = product?.comments || [];
   useEffect(() => {
     if (questions.length === 0) {

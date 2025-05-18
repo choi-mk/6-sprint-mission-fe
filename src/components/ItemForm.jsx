@@ -2,21 +2,15 @@
 
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { patchProduct, postProduct } from "@/lib/product";
+import { getProduct, patchProduct, postProduct } from "@/lib/product";
 
-function ItemForm({
-  dname = "",
-  ddescription = "",
-  dprice = 0,
-  dtags = [],
-  itemId = null,
-}) {
-  const [name, setName] = useState(dname);
-  const [description, setDescription] = useState(ddescription);
-  const [price, setPrice] = useState(dprice);
-  const [tags, setTags] = useState(dtags);
+function ItemForm({ itemId = null }) {
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [price, setPrice] = useState(0);
+  const [tags, setTags] = useState([]);
   const [tag, setTag] = useState("");
-  const [image, setImage] = useState(null);
+  const [images, setImages] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
 
   const router = useRouter();
@@ -31,7 +25,9 @@ function ItemForm({
       formData.append("description", description);
       formData.append("price", price);
       formData.append("tags", JSON.stringify(tags));
-      if (image) formData.append("image", image);
+      images.forEach((image) => {
+        formData.append("images", image);
+      });
       const newItem = await postProduct(formData);
       router.push(`/items/${newItem.id}`);
     } else {
@@ -40,7 +36,9 @@ function ItemForm({
       formData.append("description", description);
       formData.append("price", price);
       formData.append("tags", JSON.stringify(tags));
-      if (image) formData.append("image", image);
+      images.forEach((image) => {
+        formData.append("images", image);
+      });
 
       const updatedItem = await patchProduct(itemId, formData);
       router.push(`/items/${itemId}`);
@@ -48,12 +46,35 @@ function ItemForm({
   };
 
   useEffect(() => {
-    if (image === null) {
+    if (images.length < 3) {
       setErrorMessage("");
     } else {
-      setErrorMessage("*이미지 등록은 최대 1개까지 가능합니다.");
+      setErrorMessage("*이미지 등록은 최대 3개까지 가능합니다.");
     }
-  }, [image]);
+  }, [images]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (!itemId) return;
+
+      try {
+        const item = await getProduct(
+          itemId,
+          localStorage.getItem("accessToken")
+        );
+        if (item) {
+          setName(item.name);
+          setDescription(item.description);
+          setPrice(item.price);
+          setTags(item.tags);
+        }
+      } catch (err) {
+        console.error("상품 정보를 불러오는 데 실패했습니다:", err);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <form className="w-full">
@@ -78,7 +99,13 @@ function ItemForm({
             className="hidden"
             type="file"
             accept="image/*"
-            onChange={(e) => setImage(e.target.files[0])}
+            multiple
+            disabled={images.length >= 3}
+            onChange={(e) => {
+              const selectedFiles = Array.from(e.target.files);
+              setImages((prevImages) => [...prevImages, ...selectedFiles]);
+              console.log("images", images);
+            }}
           />
           <label
             htmlFor="imageUpload"
@@ -93,20 +120,25 @@ function ItemForm({
               <div className="text-gray-400">이미지 등록</div>
             </div>
           </label>
-          {image && (
-            <div className="relative">
-              <img
-                src={URL.createObjectURL(image)}
-                className="w-70 h-70 rounded-2xl object-cover"
-              />
-              <button
-                className="absolute top-1 right-1 z-10 rounded-full bg-gray-400 w-5 h-5 flex justify-center items-center"
-                onClick={(e) => setImage(null)}
-              >
-                <img src="/assets/ic/ic_cancel.png" className="w-2 h-2" />
-              </button>
-            </div>
-          )}
+          <div className="flex gap-3">
+            {images.map((image, index) => (
+              <div className="relative" key={index}>
+                <img
+                  src={URL.createObjectURL(image)}
+                  className="w-70 h-70 rounded-2xl object-cover"
+                />
+                <button
+                  className="absolute top-1 right-1 z-10 rounded-full bg-gray-400 w-5 h-5 flex justify-center items-center"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setImages((prev) => prev.filter((_, i) => i !== index));
+                  }}
+                >
+                  <img src="/assets/ic/ic_cancel.png" className="w-2 h-2" />
+                </button>
+              </div>
+            ))}
+          </div>
         </div>
         <div className="text-error">{errorMessage}</div>
       </div>

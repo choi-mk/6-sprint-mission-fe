@@ -16,7 +16,7 @@ function ItemList({ order, search }) {
     <div className="grid grid-cols-2 gap-2 mt-4">
       {items.map((item) => (
         <Link href={`/items/${item.id}`} key={item.id} className="w-42">
-          <Item name={item.name} price={item.price} />
+          <Item item={item} />
         </Link>
       ))}
     </div>

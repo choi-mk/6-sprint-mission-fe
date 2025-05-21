@@ -1,11 +1,9 @@
-import ItemHeader from "./_components/ItemHeader";
-import ItemList from "./_components/ItemList";
+import ItemPage from "./_components/ItemPage";
 
 export default async function ItemsPage() {
   return (
     <div className="p-4">
-      <ItemHeader />
-      <ItemList />
+      <ItemPage />
     </div>
   );
 }

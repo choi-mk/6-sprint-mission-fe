@@ -1,14 +1,16 @@
-export const getProduct = async (productId) => {
+export const getProduct = async (productId, accessToken) => {
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/products/${productId}`,
       {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          Authorization: `Bearer ${accessToken}`,
         },
       }
     );
+
     const data = await res.json();
+
     return data;
   } catch (error) {
     console.error("상품 정보를 가져오는 데 실패했습니다:", error);
@@ -22,7 +24,8 @@ export const getAllProducts = async (search = "", order = "recent") => {
       `${process.env.NEXT_PUBLIC_API_URL}/products?keyword=${search}&orderBy=${order}`
     );
     const data = await res.json();
-    return data.list;
+
+    return data;
   } catch (error) {
     console.error("상품 목록을 가져오는 데 실패했습니다:", error);
     throw error;
@@ -34,11 +37,11 @@ export const postProduct = async (productData) => {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/products`, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
         Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
       },
-      body: JSON.stringify(productData),
+      body: productData,
     });
+
     const data = await res.json();
     if (!res.ok) {
       throw new Error(data.message);
@@ -57,10 +60,9 @@ export const patchProduct = async (productId, productData) => {
       {
         method: "PATCH",
         headers: {
-          "Content-Type": "application/json",
           Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
         },
-        body: JSON.stringify(productData),
+        body: productData,
       }
     );
     const data = await res.json();
@@ -85,11 +87,10 @@ export const deleteProduct = async (productId) => {
         },
       }
     );
-    const data = await res.json();
     if (!res.ok) {
       throw new Error(data.message || "Failed to delete product");
     }
-    return data;
+    return res;
   } catch (error) {
     console.error("상품 삭제에 실패했습니다:", error);
     throw error;

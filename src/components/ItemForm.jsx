@@ -1,47 +1,81 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { patchProduct, postProduct } from "@/lib/product";
+import { getProduct, patchProduct, postProduct } from "@/lib/product";
 
-function ItemForm({
-  dname = "",
-  ddescription = "",
-  dprice = 0,
-  dtags = [],
-  itemId = null,
-}) {
-  const [name, setName] = useState(dname);
-  const [description, setDescription] = useState(ddescription);
-  const [price, setPrice] = useState(dprice);
-  const [tags, setTags] = useState(dtags);
+function ItemForm({ itemId = null }) {
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [price, setPrice] = useState(0);
+  const [tags, setTags] = useState([]);
   const [tag, setTag] = useState("");
-  const images = ["https://example.com/"];
+  const [images, setImages] = useState([]);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const router = useRouter();
   const isValid =
     name.trim() !== "" && description.trim() !== "" && price !== 0;
+
   const handleClick = async (e) => {
     e.preventDefault();
     if (!itemId) {
-      const newItem = await postProduct({
-        name,
-        description,
-        price,
-        tags,
-        images,
+      const formData = new FormData();
+      formData.append("name", name);
+      formData.append("description", description);
+      formData.append("price", price);
+      formData.append("tags", JSON.stringify(tags));
+      images.forEach((image) => {
+        formData.append("images", image);
       });
+      const newItem = await postProduct(formData);
       router.push(`/items/${newItem.id}`);
     } else {
-      const updatedItem = await patchProduct(itemId, {
-        name,
-        description,
-        price,
-        tags,
+      const formData = new FormData();
+      formData.append("name", name);
+      formData.append("description", description);
+      formData.append("price", price);
+      formData.append("tags", JSON.stringify(tags));
+      images.forEach((image) => {
+        formData.append("images", image);
       });
+
+      const updatedItem = await patchProduct(itemId, formData);
       router.push(`/items/${itemId}`);
     }
   };
+
+  useEffect(() => {
+    if (images.length < 3) {
+      setErrorMessage("");
+    } else {
+      setErrorMessage("*이미지 등록은 최대 3개까지 가능합니다.");
+    }
+  }, [images]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (!itemId) return;
+
+      try {
+        const item = await getProduct(
+          itemId,
+          localStorage.getItem("accessToken")
+        );
+        if (item) {
+          setName(item.name);
+          setDescription(item.description);
+          setPrice(item.price);
+          setTags(item.tags);
+          setImages(item.images);
+        }
+      } catch (err) {
+        console.error("상품 정보를 불러오는 데 실패했습니다:", err);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <form className="w-full">
@@ -60,7 +94,54 @@ function ItemForm({
       </div>
       <div className="flex flex-col mt-6">
         <label className="text-sm text-gray-800 font-bold">상품 이미지</label>
-        <div className="w-70 h-70 rounded-3xl bg-gray-200"></div>
+        <div className="flex gap-6 mt-4">
+          <input
+            id="imageUpload"
+            className="hidden"
+            type="file"
+            accept="image/*"
+            multiple
+            disabled={images.length >= 3}
+            onChange={(e) => {
+              const selectedFiles = Array.from(e.target.files);
+              setImages((prevImages) => [...prevImages, ...selectedFiles]);
+              console.log("images", images);
+            }}
+          />
+          <label
+            htmlFor="imageUpload"
+            className="w-70 h-70 bg-gray-200 rounded-2xl flex items-center justify-center cursor-pointer"
+          >
+            <div className="flex flex-col justify-center items-center">
+              <img
+                src="/assets/ic/ic_plus.png"
+                className="w-12 h-12"
+                alt="이미지 등록"
+              />
+              <div className="text-gray-400">이미지 등록</div>
+            </div>
+          </label>
+          <div className="flex gap-3">
+            {images.map((image, index) => (
+              <div className="relative" key={index}>
+                <img
+                  src={URL.createObjectURL(image)}
+                  className="w-70 h-70 rounded-2xl object-cover"
+                />
+                <button
+                  className="absolute top-1 right-1 z-10 rounded-full bg-gray-400 w-5 h-5 flex justify-center items-center"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setImages((prev) => prev.filter((_, i) => i !== index));
+                  }}
+                >
+                  <img src="/assets/ic/ic_cancel.png" className="w-2 h-2" />
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="text-error">{errorMessage}</div>
       </div>
       <div className="flex flex-col mt-6">
         <label className="text-sm text-gray-800 font-bold">상품명</label>

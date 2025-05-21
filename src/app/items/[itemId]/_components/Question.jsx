@@ -11,11 +11,10 @@ function Question({ question, itemId }) {
   const [content, setContent] = useState(question.content);
   const [isMine, setIsMine] = useState(false);
   const { user } = useAuth();
-  console.log(question.writer);
 
   useEffect(() => {
     if (user && question) {
-      setIsMine(question.writer.id === user.id);
+      setIsMine(question.userId === user.id);
     }
   }, [user, question]);
 
@@ -72,7 +71,7 @@ function Question({ question, itemId }) {
         <div className="flex">
           <img src="/assets/ic/ic_profile.png" className="w-8 h-8" />
           <div className="ml-2">
-            <p className="text-gray-600 text-xs">{question.writer.nickname}</p>
+            <p className="text-gray-600 text-xs">{question.user.nickname}</p>
             <p className="text-gray-400 text-xs">1시간 전</p>
           </div>
         </div>

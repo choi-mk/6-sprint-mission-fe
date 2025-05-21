@@ -1,19 +1,20 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import BestArticle from "./BestArticle";
-import { getAllArticles } from "@/lib/article";
+import { getAllProducts } from "@/lib/product";
+import BestItem from "./BestItem";
+import Link from "next/link";
 
-function BestBulletin() {
+function BestItemList() {
   const [isLoading, setIsLoading] = useState(true);
-  const [articles, setArticles] = useState([]);
+  const [items, setItems] = useState([]);
   const [windowWidth, setWindowWidth] = useState(0);
 
-  const fetchArticles = async () => {
+  const fetchItems = async () => {
     const search = "";
     const order = "favorite";
-    const data = await getAllArticles(search, order);
-    setArticles(data);
+    const data = await getAllProducts(search, order);
+    setItems(data);
     setIsLoading(false);
   };
 
@@ -22,13 +23,13 @@ function BestBulletin() {
   };
 
   const getCount = () => {
-    if (windowWidth >= 1280) return 3;
+    if (windowWidth >= 1280) return 4;
     if (windowWidth >= 768) return 2;
     return 1;
   };
 
   useEffect(() => {
-    fetchArticles();
+    fetchItems();
     handleResize();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
@@ -36,20 +37,20 @@ function BestBulletin() {
 
   return (
     <div className="flex flex-col gap-4">
-      <p className="font-bold text-xl">베스트 게시글</p>
+      <p className="font-bold text-xl">베스트 아이템</p>
       <div className="flex gap-6 justify-center">
         {isLoading ? (
           <p>로딩중...</p>
         ) : (
-          articles
-            .slice(0, getCount())
-            .map((article) => (
-              <BestArticle key={article.id} title={article.title} />
-            ))
+          items.slice(0, getCount()).map((item) => (
+            <Link href={`/items/${item.id}`} key={item.id}>
+              <BestItem item={item} />
+            </Link>
+          ))
         )}
       </div>
     </div>
   );
 }
 
-export default BestBulletin;
+export default BestItemList;

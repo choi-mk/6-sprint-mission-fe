@@ -6,7 +6,9 @@ import React from "react";
 function DeleteModal({ setIsModalOpen, itemId }) {
   const router = useRouter();
   const handleClick = async () => {
-    await deleteProduct(itemId);
+    const deletedProduct = await deleteProduct(itemId);
+    console.log("끝!!");
+    setIsModalOpen(false);
     router.push("/items");
   };
   return (

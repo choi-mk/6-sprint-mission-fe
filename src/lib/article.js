@@ -1,7 +1,7 @@
 export const getArticle = async (articleId) => {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/articles/${articleId}`
+      `${process.env.NEXT_PUBLIC_API_URL}/api/articles/${articleId}`
     );
     if (!res.ok) throw new Error("Failed to fetch article");
     const data = await res.json();
@@ -15,7 +15,7 @@ export const getArticle = async (articleId) => {
 export const getAllArticles = async (search = "", order = "recent") => {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/articles?keyword=${search}&orderBy=${order}`
+      `${process.env.NEXT_PUBLIC_API_URL}/api/articles?search=${search}&orderBy=${order}`
     );
     if (!res.ok) throw new Error("Failed to fetch all articles");
     const data = await res.json();
@@ -28,7 +28,7 @@ export const getAllArticles = async (search = "", order = "recent") => {
 
 export const postArticle = async (articleData) => {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/articles`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/articles`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -48,7 +48,7 @@ export const postArticle = async (articleData) => {
 export const patchArticle = async (articleId, articleData) => {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/articles/${articleId}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/api/articles/${articleId}`,
       {
         method: "PATCH",
         headers: {
@@ -70,7 +70,7 @@ export const patchArticle = async (articleId, articleData) => {
 export const deleteArticle = async (articleId) => {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/articles/${articleId}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/api/articles/${articleId}`,
       {
         method: "DELETE",
         headers: {

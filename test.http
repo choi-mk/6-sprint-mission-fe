@@ -23,3 +23,21 @@ Content-Type:application/json
 ###
 POST https://panda-market-api.vercel.app/products/703/favorite
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEwNywic2NvcGUiOiJhY2Nlc3MiLCJpYXQiOjE3NDU4MjE5MTUsImV4cCI6MTc0NTgyMzcxNSwiaXNzIjoic3AtcGFuZGEtbWFya2V0In0.Qo0-ozIxSnOare9IWO8JyycXu5yvCEqukgVcxYRJviY
+
+
+
+###
+GET http://localhost:3000/api/articles?search=&orderBy=recent
+
+
+
+###
+POST http://localhost:3000/api/users/signup
+Content-Type:application/json
+
+{
+    "nickname": "abcd",
+    "email":"aa@naver.com",
+    "password": "12345678"
+}
+

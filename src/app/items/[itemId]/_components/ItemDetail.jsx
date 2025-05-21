@@ -12,9 +12,14 @@ import Dropdown from "@/components/Dropdown";
 import { useAuth } from "@/providers/AuthProvider";
 
 function ItemDetail({ itemId }) {
-  const { data: item, isLoading } = useQuery({
+  const {
+    data: item,
+    isLoading,
+    isError,
+    error,
+  } = useQuery({
     queryKey: ["product", itemId],
-    queryFn: () => getProduct(itemId),
+    queryFn: () => getProduct(itemId, localStorage.getItem("accessToken")),
   });
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { isOpen, setIsOpen, dropDownRef } = useOutsideClick();
@@ -25,44 +30,54 @@ function ItemDetail({ itemId }) {
 
   useEffect(() => {
     if (item && user) {
-      setIsMine(item.ownerId === user.id);
+      setIsMine(item.userId === user.id);
     }
+
     if (item) {
-      console.log(item);
       setIsFavorite(item.isFavorite);
       setFavoriteCount(item.favoriteCount);
     }
   }, [item, user]);
-  if (isLoading) {
-    return <div>로딩중...</div>;
-  }
+
+  if (isLoading) return <div>로딩중...</div>;
+  if (isError) return <div>{error.message}</div>;
+
   const handleClick = () => {
     setIsOpen((prev) => !prev);
   };
   const handleClickHeart = async () => {
-    if (user) {
-      let updatedItem;
-      if (isFavorite) {
-        updatedItem = await deleteProductFavorite(itemId);
-      } else {
-        updatedItem = await postProductFavorite(itemId);
-      }
+    if (!user) return;
+
+    setIsFavorite((prev) => !prev);
+    setFavoriteCount((prev) => prev + (isFavorite ? -1 : 1));
+
+    try {
+      const updatedItem = isFavorite
+        ? await deleteProductFavorite(itemId)
+        : await postProductFavorite(itemId);
       setFavoriteCount(updatedItem.favoriteCount);
+    } catch (error) {
       setIsFavorite((prev) => !prev);
+      setFavoriteCount((prev) => prev + (isFavorite ? 1 : -1));
     }
   };
 
   return (
     <div className="flex flex-col gap-4 w-full items-center md:flex-row md:items-start">
       <img
-        src="/assets/img/img_item_detail.png"
+        src={
+          `${process.env.NEXT_PUBLIC_API_URL}${item.images[0]}` ||
+          "/assets/img/img_item_detail.png"
+        }
         className="w-[343px] h-[343px] object-cover rounded-xl"
       />
       <div className="border-b border-gray-200 pb-6 w-full">
         <div className="border-b border-gray-200 pb-4 flex justify-between">
           <div className="flex flex-col gap-2">
             <p className="text-gray-800 font-semibold text-lg">{item.name}</p>
-            <p className="text-gray-800 font-semibold text-2xl">{item.price}</p>
+            <p className="text-gray-800 font-semibold text-2xl">
+              {item.price}원
+            </p>
           </div>
           {isMine && (
             <div className=" relative h-4">

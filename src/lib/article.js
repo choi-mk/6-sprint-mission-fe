@@ -1,54 +1,88 @@
-export const getArticle = async (id) => {
-  const res = await fetch(`http://localhost:3000/api/board/${id}`);
-  const data = await res.json();
-  return data;
+export const getArticle = async (articleId) => {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/articles/${articleId}`
+    );
+    if (!res.ok) throw new Error("Failed to fetch article");
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.error("getArticle error:", error);
+    throw error;
+  }
 };
 
-export const getAllArticles = async (search = "", order = "asc") => {
-  const res = await fetch(
-    `http://localhost:3000/api/board?search=${search}&orderBy=${order}`
-  );
-  const data = await res.json();
-  return data;
+export const getAllArticles = async (search = "", order = "recent") => {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/articles?keyword=${search}&orderBy=${order}`
+    );
+    if (!res.ok) throw new Error("Failed to fetch all articles");
+    const data = await res.json();
+    return data.list;
+  } catch (error) {
+    console.error("getAllArticles error:", error);
+    throw error;
+  }
 };
 
 export const postArticle = async (articleData) => {
-  const res = await fetch(`http://localhost:3000/api/board`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(articleData),
-  });
-  if (!res.ok) {
-    throw new Error("Failed to post article");
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/articles`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
+      body: JSON.stringify(articleData),
+    });
+    if (!res.ok) throw new Error("Failed to post article");
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.error("postArticle error:", error);
+    throw error;
   }
-  const data = await res.json();
-  return data;
 };
 
-export const patchArticle = async (id, articleData) => {
-  const res = await fetch(`http://localhost:3000/api/board/${id}`, {
-    method: "PATCH",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(articleData),
-  });
-  if (!res.ok) {
-    throw new Error("Failed to patch article");
+export const patchArticle = async (articleId, articleData) => {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/articles/${articleId}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+        body: JSON.stringify(articleData),
+      }
+    );
+    if (!res.ok) throw new Error("Failed to patch article");
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.error("patchArticle error:", error);
+    throw error;
   }
-  const data = await res.json();
-  return data;
 };
 
-export const deleteArticle = async (id) => {
-  const res = await fetch(`http://localhost:3000/api/board/${id}`, {
-    method: "DELETE",
-  });
-  if (!res.ok) {
-    throw new Error("Failed to delete article");
+export const deleteArticle = async (articleId) => {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/articles/${articleId}`,
+      {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+      }
+    );
+    if (!res.ok) throw new Error("Failed to delete article");
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.error("deleteArticle error:", error);
+    throw error;
   }
-  const data = await res.json();
-  return data;
 };

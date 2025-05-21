@@ -2,7 +2,7 @@ import React from "react";
 
 function OrderDropdown({ setOrder }) {
   const handleClick = () => {
-    setOrder("desc");
+    setOrder("recent");
   };
   return (
     <div className="w-32 h-10.5 border border-gray-300 rounded-xl flex flex-col justify-center text-gray-500 bg-white">

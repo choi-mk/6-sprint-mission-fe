@@ -13,10 +13,10 @@ function ArticleForm({ dtitle = "", dcontent = "", articleId = null }) {
     e.preventDefault();
     if (!articleId) {
       const newArticle = await postArticle({ title, content });
-      router.push(`/board/${newArticle.id}`);
+      router.push(`/articles/${newArticle.id}`);
     } else {
       const updatedArticle = await patchArticle(articleId, { title, content });
-      router.push(`/board/${articleId}`);
+      router.push(`/articles/${articleId}`);
     }
   };
 

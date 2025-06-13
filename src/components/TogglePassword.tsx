@@ -1,6 +1,6 @@
 import React from "react";
 import { Eye, EyeOff } from "lucide-react";
-import { TPassword, TSign } from "@/types";
+import { TPassword } from "@/types";
 
 interface TogglePasswordProps {
   showPassword: TPassword;

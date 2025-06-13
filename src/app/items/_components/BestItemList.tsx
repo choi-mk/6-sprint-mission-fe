@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-// import { getAllProducts } from "@/lib/product";
+import { getAllItems } from "@/lib/api/item";
 import BestItem from "./BestItem";
 import Link from "next/link";
 import { TItem } from "@/types";
@@ -14,7 +14,7 @@ function BestItemList() {
   const fetchItems = async () => {
     const search = "";
     const order = "favorite";
-    const data: TItem[] = []; //await getAllProducts(search, order);
+    const data: TItem[] = await getAllItems(search, order);
     setItems(data);
     setIsLoading(false);
   };

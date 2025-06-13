@@ -3,20 +3,20 @@
 import React, { useEffect, useState } from "react";
 import BestArticle from "./BestArticle";
 import { TArticle } from "@/types";
-// import { getAllArticles } from "@/lib/article";
+import { getAllArticles } from "@/lib/api/article";
 
 function BestBoard() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [articles, setArticles] = useState<TArticle[]>([]);
   const [windowWidth, setWindowWidth] = useState<number>(0);
 
-  //   const fetchArticles = async () => {
-  //     const search = "";
-  //     const order = "favorite";
-  //     const data = await getAllArticles(search, order);
-  //     setArticles(data);
-  //     setIsLoading(false);
-  //   };
+  const fetchArticles = async () => {
+    const search = "";
+    const order = "favorite";
+    const data = await getAllArticles(search, order);
+    setArticles(data);
+    setIsLoading(false);
+  };
 
   const handleResize = () => {
     setWindowWidth(window.innerWidth);
@@ -28,12 +28,12 @@ function BestBoard() {
     return 1;
   };
 
-  //   useEffect(() => {
-  //     fetchArticles();
-  //     handleResize();
-  //     window.addEventListener("resize", handleResize);
-  //     return () => window.removeEventListener("resize", handleResize);
-  //   }, []);
+  useEffect(() => {
+    fetchArticles();
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   return (
     <div className="flex flex-col gap-4">

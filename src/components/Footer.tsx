@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React from "react";
 
 function Footer() {
@@ -10,10 +11,26 @@ function Footer() {
             <div className="text-gray-200">FAQ</div>
           </div>
           <div className="flex gap-3">
-            <img className="w-5 h-5" src="/assets/ic/ic_facebook.png" />
-            <img className="w-5 h-5" src="/assets/ic/ic_twitter.png" />
-            <img className="w-5 h-5" src="/assets/ic/ic_youtube.png" />
-            <img className="w-5 h-5" src="/assets/ic/ic_instagram.png" />
+            <Image
+              alt="facebook"
+              className="w-5 h-5"
+              src="/assets/ic/ic_facebook.png"
+            />
+            <Image
+              alt="twitter"
+              className="w-5 h-5"
+              src="/assets/ic/ic_twitter.png"
+            />
+            <Image
+              alt="youtube"
+              className="w-5 h-5"
+              src="/assets/ic/ic_youtube.png"
+            />
+            <Image
+              alt="instagram"
+              className="w-5 h-5"
+              src="/assets/ic/ic_instagram.png"
+            />
           </div>
         </div>
         <div className="text-gray-400">@codeit - 2024</div>

@@ -31,7 +31,9 @@ export const getAllArticles = async (
   }
 };
 
-export const postArticle = async (articleData: Omit<TArticle, "id">) => {
+export const postArticle = async (
+  articleData: Pick<TArticle, "title" | "content">
+) => {
   try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/articles`, {
       method: "POST",

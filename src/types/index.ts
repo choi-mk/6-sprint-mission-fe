@@ -3,7 +3,7 @@ export type TItem = {
   name: string;
   description: string;
   price: number;
-  images: string[];
+  images: string[] | File[];
   tags: string[];
   favoriteCount: number;
 };
@@ -19,6 +19,8 @@ export type TArticle = {
 export type TComment = {
   id: string;
   content: string;
+  userId: TUser["id"];
+  user: TUser;
 };
 
 export type TUser = {

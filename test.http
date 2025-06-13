@@ -1,0 +1,43 @@
+GET https://panda-market-api.vercel.app/articles/446/comments
+
+
+###
+POST https://panda-market-api.vercel.app/auth/signUp
+Content-Type:application/json
+
+{
+    "email":"aa@aa.com",
+    "nickname":"name11",
+    "password":"password",
+    "passwordConfirmation":"password"
+}
+
+###
+POST https://panda-market-api.vercel.app/auth/refresh-token
+Content-Type:application/json
+
+{
+    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTA3Nywic2NvcGUiOiJyZWZyZXNoIiwiaWF0IjoxNzQ1NTQ4NTM5LCJleHAiOjE3NDYxNTMzMzksImlzcyI6InNwLXBhbmRhLW1hcmtldCJ9.-5Vx16NVsHUp6rEqupV-dEV40AJRhUzGARljZw0iXTs"
+}
+
+###
+POST https://panda-market-api.vercel.app/products/703/favorite
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEwNywic2NvcGUiOiJhY2Nlc3MiLCJpYXQiOjE3NDU4MjE5MTUsImV4cCI6MTc0NTgyMzcxNSwiaXNzIjoic3AtcGFuZGEtbWFya2V0In0.Qo0-ozIxSnOare9IWO8JyycXu5yvCEqukgVcxYRJviY
+
+
+
+###
+GET http://localhost:3000/api/articles?search=&orderBy=recent
+
+
+
+###
+POST http://localhost:3000/api/users/signup
+Content-Type:application/json
+
+{
+    "nickname": "abcd",
+    "email":"aa@naver.com",
+    "password": "12345678"
+}
+

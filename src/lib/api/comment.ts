@@ -20,7 +20,7 @@ export const getAllComments = async (
 export const postComment = async (
   type: "article" | "item",
   Id: TArticle["id"] | TItem["id"],
-  commentData: Omit<TComment, "id">
+  commentData: Pick<TComment, "content">
 ) => {
   try {
     const res = await fetch(

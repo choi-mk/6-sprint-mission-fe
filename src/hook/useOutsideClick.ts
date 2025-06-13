@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 function useOutsideClick(initialState: boolean = false) {
   const [isOpen, setIsOpen] = useState<boolean>(initialState);

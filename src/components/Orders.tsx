@@ -2,6 +2,7 @@
 import React from "react";
 import OrderDropdown from "./OrderDropdown";
 import useOutsideClick from "@/hook/useOutsideClick";
+import Image from "next/image";
 
 interface OrdersProps {
   setOrder: (value: "recent" | "favorite") => void;
@@ -19,11 +20,16 @@ function Orders({ setOrder }: OrdersProps) {
         className="bg-white border border-gray-200 rounded-xl w-11 h-11 flex justify-center items-center md:w-32 md:gap-6"
       >
         <p className="hidden md:block">최신순</p>
-        <img
+        <Image
+          alt="arrow down"
           src="assets/ic/ic_arrow_down.png"
           className="hidden md:block w-5"
         />
-        <img className="w-3.5 h-3 md:hidden" src="/assets/ic/ic_drop.png"></img>
+        <Image
+          alt="drop"
+          className="w-3.5 h-3 md:hidden"
+          src="/assets/ic/ic_drop.png"
+        ></Image>
       </div>
       {isOpen && (
         <div ref={dropDownRef} className="absolute right-0 top-full mt-1 z-50">

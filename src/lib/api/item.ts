@@ -37,7 +37,7 @@ export const getAllItems = async (
   }
 };
 
-export const postItem = async (itemData: Omit<TItem, "id">) => {
+export const postItem = async (itemData: FormData) => {
   try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/products`, {
       method: "POST",
@@ -58,10 +58,7 @@ export const postItem = async (itemData: Omit<TItem, "id">) => {
   }
 };
 
-export const patchItem = async (
-  itemId: TItem["id"],
-  itemData: Partial<Omit<TItem, "id">>
-) => {
+export const patchItem = async (itemId: TItem["id"], itemData: FormData) => {
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/products/${itemId}`,

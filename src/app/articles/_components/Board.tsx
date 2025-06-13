@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-// import { getAllArticles } from "@/lib/article";
+import { getAllArticles } from "@/lib/api/article";
 import Search from "@/components/Search";
 import Article from "./Article";
 import Orders from "@/components/Orders";
@@ -14,15 +14,14 @@ function Board() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [order, setOrder] = useState<"recent" | "favorite">("recent");
 
-  //   const fetchArticles = async () => {
-  //     const data = await getAllArticles(search, order);
-  //     setArticles(data);
-  //     setIsLoading(false);
-  //   };
-
-  //   useEffect(() => {
-  //     fetchArticles();
-  //   }, [search, order]);
+  useEffect(() => {
+    const fetchArticles = async () => {
+      const data = await getAllArticles(search, order);
+      setArticles(data);
+      setIsLoading(false);
+    };
+    fetchArticles();
+  }, [search, order]);
 
   return (
     <div className="w-full flex flex-col gap-4">

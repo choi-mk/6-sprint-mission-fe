@@ -1,4 +1,5 @@
 import { TItem } from "@/types";
+import Image from "next/image";
 import React from "react";
 
 interface ItemProps {
@@ -9,7 +10,8 @@ function Item({ item }: ItemProps) {
   return (
     <div className="flex flex-col w-42 gap-4">
       <div className="w-42 h-42 flex justify-center items-center bg-gray-50">
-        <img
+        <Image
+          alt="default item"
           src={
             `${process.env.NEXT_PUBLIC_API_URL}${item.images[0]}` ||
             "/assets/img/img_item_default.png"
@@ -21,7 +23,11 @@ function Item({ item }: ItemProps) {
         <p>{item.name}</p>
         <p className="text-gray-800 font-bold">{item.price}원</p>
         <div className="flex items-center gap-1">
-          <img className="w-4 h-4" src="/assets/ic/ic_heart.png" />
+          <Image
+            alt="heart"
+            className="w-4 h-4"
+            src="/assets/ic/ic_heart.png"
+          />
           <p>{item.favoriteCount}</p>
         </div>
       </div>

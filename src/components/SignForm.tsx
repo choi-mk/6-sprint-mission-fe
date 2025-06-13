@@ -57,8 +57,10 @@ function SignForm({ isSignup }: SignFormProps) {
       } else {
         router.push("/items");
       }
-    } catch (e: any) {
-      setErrorMessage(e.message);
+    } catch (e: unknown) {
+      if (e instanceof Error) {
+        console.log(e.message);
+      }
     }
   };
 

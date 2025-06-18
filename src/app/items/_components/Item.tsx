@@ -12,11 +12,14 @@ function Item({ item }: ItemProps) {
       <div className="w-42 h-42 flex justify-center items-center bg-gray-50">
         <Image
           alt="default item"
+          width={100}
+          height={100}
           src={
             `${process.env.NEXT_PUBLIC_API_URL}${item.images[0]}` ||
             "/assets/img/img_item_default.png"
           }
-          className="w-full h-full object-cover"
+          className=" object-cover"
+          layout="responsive"
         />
       </div>
       <div className="flex flex-col gap-1.5">
@@ -25,7 +28,8 @@ function Item({ item }: ItemProps) {
         <div className="flex items-center gap-1">
           <Image
             alt="heart"
-            className="w-4 h-4"
+            width={16}
+            height={16}
             src="/assets/ic/ic_heart.png"
           />
           <p>{item.favoriteCount}</p>

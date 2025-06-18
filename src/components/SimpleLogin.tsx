@@ -7,10 +7,20 @@ function SimpleLogin() {
       <p>간편 로그인하기</p>
       <div className="flex gap-4">
         <a href="https://www.google.com">
-          <Image alt="google" className="w-10" src="assets/ic/ic_google.png" />
+          <Image
+            alt="google"
+            width={40}
+            height={40}
+            src="/assets/ic/ic_google.png"
+          />
         </a>
         <a href="https://www.kakaocorp.com/page">
-          <Image alt="kakao" className="w-10" src="assets/ic/ic_kakao.png" />
+          <Image
+            alt="kakao"
+            width={40}
+            height={40}
+            src="/assets/ic/ic_kakao.png"
+          />
         </a>
       </div>
     </div>

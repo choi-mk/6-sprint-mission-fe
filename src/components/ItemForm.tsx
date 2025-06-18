@@ -121,7 +121,8 @@ function ItemForm({ itemId = null }: ItemFormProps) {
             <div className="flex flex-col justify-center items-center">
               <Image
                 src="/assets/ic/ic_plus.png"
-                className="w-12 h-12"
+                width={48}
+                height={48}
                 alt="이미지 등록"
               />
               <div className="text-gray-400">이미지 등록</div>
@@ -133,7 +134,9 @@ function ItemForm({ itemId = null }: ItemFormProps) {
                 <Image
                   alt="preview"
                   src={URL.createObjectURL(image)}
-                  className="w-70 h-70 rounded-2xl object-cover"
+                  width={280}
+                  height={280}
+                  className="rounded-2xl object-cover"
                 />
                 <button
                   className="absolute top-1 right-1 z-10 rounded-full bg-gray-400 w-5 h-5 flex justify-center items-center"
@@ -145,7 +148,8 @@ function ItemForm({ itemId = null }: ItemFormProps) {
                   <Image
                     alt="cancel"
                     src="/assets/ic/ic_cancel.png"
-                    className="w-2 h-2"
+                    width={8}
+                    height={8}
                   />
                 </button>
               </div>
@@ -216,7 +220,8 @@ function ItemForm({ itemId = null }: ItemFormProps) {
               <Image
                 alt="cancel"
                 src="/assets/ic/ic_cancel.png"
-                className="w-2 h-2"
+                width={8}
+                height={8}
               />
             </div>
           </div>

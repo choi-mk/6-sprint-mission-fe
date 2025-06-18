@@ -22,12 +22,16 @@ function Orders({ setOrder }: OrdersProps) {
         <p className="hidden md:block">최신순</p>
         <Image
           alt="arrow down"
-          src="assets/ic/ic_arrow_down.png"
-          className="hidden md:block w-5"
+          src="/assets/ic/ic_arrow_down.png"
+          className="hidden md:block"
+          width={20}
+          height={20}
         />
         <Image
           alt="drop"
-          className="w-3.5 h-3 md:hidden"
+          width={14}
+          height={12}
+          className="md:hidden"
           src="/assets/ic/ic_drop.png"
         ></Image>
       </div>

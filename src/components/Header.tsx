@@ -23,8 +23,10 @@ function Header() {
           <Link href="/" className="flex gap-2 items-center ">
             <Image
               alt="logo"
+              width={40}
+              height={40}
               src="/assets/ic/ic_logo.png"
-              className="h-10 w-10 hidden md:block"
+              className="hidden md:block"
             />
             <p className="text-primary-100 font-bold text-lg title-font">
               판다마켓
@@ -56,7 +58,8 @@ function Header() {
             <Image
               alt="profile"
               src="/assets/ic/ic_profile.png"
-              className="w-10 h-10"
+              width={40}
+              height={40}
             />
             <p className="text-gray-600">{user.nickname}</p>
           </div>

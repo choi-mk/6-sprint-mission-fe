@@ -13,22 +13,26 @@ function Footer() {
           <div className="flex gap-3">
             <Image
               alt="facebook"
-              className="w-5 h-5"
+              width={20}
+              height={20}
               src="/assets/ic/ic_facebook.png"
             />
             <Image
               alt="twitter"
-              className="w-5 h-5"
+              width={20}
+              height={20}
               src="/assets/ic/ic_twitter.png"
             />
             <Image
               alt="youtube"
-              className="w-5 h-5"
+              width={20}
+              height={20}
               src="/assets/ic/ic_youtube.png"
             />
             <Image
               alt="instagram"
-              className="w-5 h-5"
+              width={20}
+              height={20}
               src="/assets/ic/ic_instagram.png"
             />
           </div>

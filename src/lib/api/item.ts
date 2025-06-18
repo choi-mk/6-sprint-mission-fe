@@ -3,7 +3,7 @@ import { TItem } from "@/types";
 export const getItem = async (itemId: TItem["id"], accessToken: string) => {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/products/${itemId}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/items/${itemId}`,
       {
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -26,7 +26,7 @@ export const getAllItems = async (
 ) => {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/products?keyword=${search}&orderBy=${order}`
+      `${process.env.NEXT_PUBLIC_API_URL}/items?keyword=${search}&orderBy=${order}`
     );
     const data = await res.json();
 
@@ -39,12 +39,12 @@ export const getAllItems = async (
 
 export const postItem = async (itemData: FormData) => {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/products`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/items`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
       },
-      body: JSON.stringify(itemData),
+      body: itemData,
     });
 
     const data = await res.json();
@@ -61,7 +61,7 @@ export const postItem = async (itemData: FormData) => {
 export const patchItem = async (itemId: TItem["id"], itemData: FormData) => {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/products/${itemId}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/items/${itemId}`,
       {
         method: "PATCH",
         headers: {
@@ -84,7 +84,7 @@ export const patchItem = async (itemId: TItem["id"], itemData: FormData) => {
 export const deleteItem = async (itemId: TItem["id"]) => {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/products/${itemId}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/items/${itemId}`,
       {
         method: "DELETE",
         headers: {
@@ -94,7 +94,7 @@ export const deleteItem = async (itemId: TItem["id"]) => {
     );
     const data = await res.json();
     if (!res.ok) {
-      throw new Error(data.message || "Failed to delete product");
+      throw new Error(data.message || "Failed to delete item");
     }
     return res;
   } catch (error) {
@@ -106,7 +106,7 @@ export const deleteItem = async (itemId: TItem["id"]) => {
 export const postItemFavorite = async (itemId: TItem["id"]) => {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/products/${itemId}/favorite`,
+      `${process.env.NEXT_PUBLIC_API_URL}/items/${itemId}/favorite`,
       {
         method: "POST",
         headers: {
@@ -128,7 +128,7 @@ export const postItemFavorite = async (itemId: TItem["id"]) => {
 export const deleteItemFavorite = async (itemId: TItem["id"]) => {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/products/${itemId}/favorite`,
+      `${process.env.NEXT_PUBLIC_API_URL}/items/${itemId}/favorite`,
       {
         method: "DELETE",
         headers: {

@@ -20,7 +20,7 @@ function ItemDetail({ itemId }: ItemDetailProps) {
     isError,
     error,
   } = useQuery({
-    queryKey: ["product", itemId],
+    queryKey: ["item", itemId],
     queryFn: () => getItem(itemId, localStorage.getItem("accessToken") ?? ""),
   });
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -73,7 +73,9 @@ function ItemDetail({ itemId }: ItemDetailProps) {
           `${process.env.NEXT_PUBLIC_API_URL}${item.images[0]}` ||
           "/assets/img/img_item_detail.png"
         }
-        className="w-[343px] h-[343px] object-cover rounded-xl"
+        className=" object-cover rounded-xl"
+        width={343}
+        height={343}
       />
       <div className="border-b border-gray-200 pb-6 w-full">
         <div className="border-b border-gray-200 pb-4 flex justify-between">
@@ -91,7 +93,8 @@ function ItemDetail({ itemId }: ItemDetailProps) {
               >
                 <Image
                   alt="setting"
-                  className="w-1 h-4"
+                  width={4}
+                  height={16}
                   src="/assets/ic/ic_setting.png"
                 />
               </div>
@@ -134,7 +137,8 @@ function ItemDetail({ itemId }: ItemDetailProps) {
             <Image
               alt="profile"
               src="/assets/ic/ic_profile.png"
-              className="w-10 h-10"
+              width={40}
+              height={40}
             />
             <div>
               <p className="text-gray-600">총명한 판다</p>
@@ -150,13 +154,15 @@ function ItemDetail({ itemId }: ItemDetailProps) {
                 <Image
                   alt="full heart"
                   src="/assets/ic/ic_full_heart.png"
-                  className="w-5 h-4.5"
+                  height={18}
+                  width={20}
                 />
               ) : (
                 <Image
                   alt="heart"
                   src="/assets/ic/ic_heart.png"
-                  className="w-5 h-4.5"
+                  height={18}
+                  width={20}
                 />
               )}
               {favoriteCount}

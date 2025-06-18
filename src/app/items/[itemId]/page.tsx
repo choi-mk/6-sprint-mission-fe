@@ -23,7 +23,8 @@ export default async function ItemDetailPage({
             목록으로 돌아가기
             <Image
               alt="back"
-              className="w-5 h-4"
+              width={20}
+              height={16}
               src="/assets/ic/ic_back.png"
             />
           </button>

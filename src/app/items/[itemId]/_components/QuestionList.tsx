@@ -13,15 +13,15 @@ interface QuestionListProps {
 
 function QuestionList({ itemId }: QuestionListProps) {
   const {
-    data: product,
+    data: item,
     isLoading,
     isError,
     error,
   } = useQuery({
-    queryKey: ["product", itemId],
+    queryKey: ["item", itemId],
     queryFn: () => getItem(itemId, localStorage.getItem("accessToken") ?? ""),
   });
-  const questions = useMemo(() => product?.comments || [], [product?.comments]);
+  const questions = useMemo(() => item?.comments || [], [item?.comments]);
 
   const [isEmpty, setIsEmpty] = useState(false);
 

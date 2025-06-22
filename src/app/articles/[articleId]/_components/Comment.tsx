@@ -71,7 +71,8 @@ function Comment({ dcontent, commentId, articleId }: CommentProps) {
           <Image
             alt="profile"
             src="/assets/ic/ic_profile.png"
-            className="w-8 h-8"
+            width={32}
+            height={32}
           />
           <div className="ml-2">
             <p className="text-gray-600 text-xs">똑똑한 판다</p>

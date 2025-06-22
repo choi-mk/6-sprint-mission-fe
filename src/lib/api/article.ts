@@ -1,9 +1,18 @@
+"use client";
 import { TArticle } from "@/types";
 
-export const getArticle = async (articleId: TArticle["id"]) => {
+export const getArticle = async (
+  articleId: TArticle["id"],
+  accessToken: string
+) => {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/articles/${articleId}`
+      `${process.env.NEXT_PUBLIC_API_URL}/articles/${articleId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
     );
     if (!res.ok) throw new Error("Failed to fetch article");
     const data = await res.json();
@@ -20,45 +29,45 @@ export const getAllArticles = async (
 ) => {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/articles?search=${search}&orderBy=${order}`
+      `${process.env.NEXT_PUBLIC_API_URL}/articles?search=${search}&orderBy=${order}`
     );
     if (!res.ok) throw new Error("Failed to fetch all articles");
     const data = await res.json();
-    return data.list;
+    return data;
   } catch (error) {
     console.error("getAllArticles error:", error);
     throw error;
   }
 };
 
-export const postArticle = async (
-  articleData: Pick<TArticle, "title" | "content">
-) => {
+export const postArticle = async (articleData: FormData) => {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/articles`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/articles`, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
         Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
       },
-      body: JSON.stringify(articleData),
+      body: articleData,
     });
-    if (!res.ok) throw new Error("Failed to post article");
+
     const data = await res.json();
+    if (!res.ok) {
+      throw new Error(data.message);
+    }
     return data;
   } catch (error) {
-    console.error("postArticle error:", error);
+    console.error("상품 등록에 실패했습니다:", error);
     throw error;
   }
 };
 
 export const patchArticle = async (
   articleId: TArticle["id"],
-  articleData: Partial<Omit<TArticle, "id">>
+  articleData: FormData
 ) => {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/articles/${articleId}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/articles/${articleId}`,
       {
         method: "PATCH",
         headers: {
@@ -80,7 +89,7 @@ export const patchArticle = async (
 export const deleteArticle = async (articleId: TArticle["id"]) => {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/articles/${articleId}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/articles/${articleId}`,
       {
         method: "DELETE",
         headers: {

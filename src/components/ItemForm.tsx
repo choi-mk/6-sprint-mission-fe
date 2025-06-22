@@ -111,7 +111,6 @@ function ItemForm({ itemId = null }: ItemFormProps) {
             onChange={(e) => {
               const selectedFiles = Array.from(e.target.files || []);
               setImages([...images, ...selectedFiles]);
-              console.log("images", images);
             }}
           />
           <label

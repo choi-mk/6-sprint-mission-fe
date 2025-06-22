@@ -12,7 +12,10 @@ export default async function ArticleDetailPage({
   params: Promise<{ articleId: TArticle["id"] }>;
 }) {
   const { articleId } = await params;
-  const article = await getArticle(articleId);
+  const article = await getArticle(
+    articleId,
+    localStorage.getItem("accessToken") ?? ""
+  );
   return (
     <div className="flex justify-center m-4 flex-col">
       <ArticleDetail

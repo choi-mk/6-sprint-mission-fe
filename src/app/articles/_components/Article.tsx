@@ -14,7 +14,8 @@ function Article({ title }: ArticleProps) {
         <div className="w-18 h-18 flex justify-center items-center bg-white rounded-xl border border-gray-100">
           <Image
             alt="default"
-            className="w-12 h-11"
+            width={48}
+            height={44}
             src="/assets/img/img_default.png"
           />
         </div>
@@ -23,7 +24,8 @@ function Article({ title }: ArticleProps) {
         <div className="flex gap-2">
           <Image
             alt="profile"
-            className="w-6 h-6"
+            width={24}
+            height={24}
             src="/assets/ic/ic_profile.png"
           />
           <p>총명한 판다</p>
@@ -32,7 +34,8 @@ function Article({ title }: ArticleProps) {
         <div className="flex gap-2 items-center">
           <Image
             alt="heart"
-            className="w-5 h-4.5"
+            width={20}
+            height={18}
             src="/assets/ic/ic_heart.png"
           />
           <div className="text-gray-500">{heart > 9999 ? "9999+" : heart}</div>

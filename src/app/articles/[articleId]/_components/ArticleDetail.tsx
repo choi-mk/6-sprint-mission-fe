@@ -46,7 +46,8 @@ function ArticleDetail({ title, content, articleId }: ArticleDetailProps) {
         <div className="flex items-center gap-4">
           <Image
             alt="profile"
-            className="w-10 h-10"
+            width={40}
+            height={40}
             src="/assets/ic/ic_profile.png"
           />
           <div className="flex">
@@ -59,7 +60,8 @@ function ArticleDetail({ title, content, articleId }: ArticleDetailProps) {
             <Image
               alt="heart"
               src="/assets/ic/ic_heart.png"
-              className="w-6.5 h-6"
+              width={26}
+              height={24}
             />
             <p className="text-gray-500">123</p>
           </div>

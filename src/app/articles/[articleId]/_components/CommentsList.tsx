@@ -3,8 +3,14 @@
 import React, { useEffect, useState } from "react";
 import Comment from "./Comment";
 import Image from "next/image";
+import { TArticle, TComment } from "@/types";
 
-function CommentsList({ comments, articleId }) {
+interface CommentsListProps {
+  comments: TComment[];
+  articleId: TArticle["id"];
+}
+
+function CommentsList({ comments, articleId }: CommentsListProps) {
   const [isEmpty, setIsEmpty] = useState(false);
 
   useEffect(() => {

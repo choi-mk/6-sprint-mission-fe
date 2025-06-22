@@ -22,8 +22,6 @@ function ItemList({ order, search }: ItemListProps) {
     queryFn: () => getAllItems(search, order),
   });
 
-  console.log(items);
-
   if (isLoading) return <div>로딩중...</div>;
   if (isError) return <div>{error.message}</div>;
 

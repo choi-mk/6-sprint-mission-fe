@@ -12,7 +12,8 @@ function BestArticle({ title }: BestArticleProps) {
       <div className="w-25.5 h-7.5 bg-primary-100 rounded-b-2xl ml-6 flex justify-center items-center gap-1">
         <Image
           alt="medal"
-          className="w-3.5 h-3.5"
+          width={14}
+          height={14}
           src="/assets/ic/ic_medal.png"
         />
         <p className="text-white font-semibold">Best</p>
@@ -22,7 +23,8 @@ function BestArticle({ title }: BestArticleProps) {
         <div className="w-18 h-18 bg-white rounded-md flex justify-center items-center mr-6 ml-auto">
           <Image
             alt="default"
-            className="w-12 h-11"
+            width={48}
+            height={44}
             src="/assets/img/img_default.png"
           />
         </div>
@@ -33,7 +35,8 @@ function BestArticle({ title }: BestArticleProps) {
           <div className="flex items-center gap-1">
             <Image
               alt="heart"
-              className="w-3.5 h-3"
+              width={14}
+              height={12}
               src="/assets/ic/ic_heart.png"
             />
             <div className="text-gray-500">

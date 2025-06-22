@@ -1,3 +1,4 @@
+"use client";
 import ArticleForm from "@/components/ArticleForm";
 import { getArticle } from "@/lib/api/article";
 import { TArticle } from "@/types";
@@ -8,7 +9,10 @@ export default async function PatchPage({
   params: Promise<{ articleId: TArticle["id"] }>;
 }) {
   const { articleId } = await params;
-  const article = await getArticle(articleId);
+  const article = await getArticle(
+    articleId,
+    localStorage.getItem("accessToken") ?? ""
+  );
   return (
     <div className="flex justify-center m-4">
       <ArticleForm

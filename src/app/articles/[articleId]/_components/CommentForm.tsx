@@ -1,12 +1,17 @@
 "use client";
 
 import { postComment } from "@/lib/api/comment";
+import { TArticle } from "@/types";
 import React, { useState } from "react";
 
-function CommentForm({ articleId }) {
+interface CommentFormProps {
+  articleId: TArticle["id"];
+}
+
+function CommentForm({ articleId }: CommentFormProps) {
   const [content, setContent] = useState("");
   const handleClick = async () => {
-    const newComment = await postComment("articles", articleId, { content });
+    const newComment = await postComment("article", articleId, { content });
     if (newComment) {
       window.location.reload();
     }

@@ -10,7 +10,7 @@ interface QuestionFormProps {
 function QuestionForm({ itemId }: QuestionFormProps) {
   const [content, setContent] = useState("");
   const handleClick = async () => {
-    const newQuestion = await postComment("item", itemId, { content });
+    const newQuestion = await postComment("items", itemId, { content });
     if (newQuestion) {
       window.location.reload();
     }

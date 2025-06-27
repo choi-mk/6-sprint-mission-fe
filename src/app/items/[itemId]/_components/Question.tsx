@@ -57,7 +57,8 @@ function Question({ question, itemId }: QuestionProps) {
               >
                 <Image
                   alt="setting"
-                  className="w-1 h-4"
+                  width={4}
+                  height={16}
                   src="/assets/ic/ic_setting.png"
                 />
               </div>

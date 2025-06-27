@@ -16,10 +16,7 @@ function BestItem({ item }: BestItemProps) {
           className=" object-cover"
           width={100}
           height={100}
-          src={
-            `${process.env.NEXT_PUBLIC_API_URL}${item.images[0]}` ||
-            "/assets/img/img_default.png"
-          }
+          src={`${item.images[0]}` || "/assets/img/img_default.png"}
           layout="responsive"
         ></Image>
       </div>

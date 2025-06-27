@@ -69,10 +69,7 @@ function ItemDetail({ itemId }: ItemDetailProps) {
     <div className="flex flex-col gap-4 w-full items-center md:flex-row md:items-start">
       <Image
         alt="item detail"
-        src={
-          `${process.env.NEXT_PUBLIC_API_URL}${item.images[0]}` ||
-          "/assets/img/img_item_detail.png"
-        }
+        src={`${item.images[0]}` || "/assets/img/img_item_detail.png"}
         className=" object-cover rounded-xl"
         width={343}
         height={343}

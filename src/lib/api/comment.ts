@@ -18,7 +18,7 @@ export const getAllComments = async (
 };
 
 export const postComment = async (
-  type: "article" | "item",
+  type: "articles" | "items",
   Id: TArticle["id"] | TItem["id"],
   commentData: Pick<TComment, "content">
 ) => {
@@ -84,9 +84,8 @@ export const deleteComment = async (commentId: TComment["id"]) => {
         },
       }
     );
-    const data = await res.json(); //?
     if (!res.ok) {
-      throw new Error(data.message);
+      throw new Error("댓글 삭제 실패");
     }
     return true;
   } catch (error) {

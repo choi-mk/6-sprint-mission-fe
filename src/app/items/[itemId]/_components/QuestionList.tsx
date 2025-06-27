@@ -46,7 +46,8 @@ function QuestionList({ itemId }: QuestionListProps) {
     <div className="mt-6 flex flex-col justify-center items-center">
       <Image
         src="/assets/img/img_question_empty.png"
-        className="h-34 w-45"
+        width={180}
+        height={136}
         alt="아직 문의가 없습니다"
       />
       <p className="text-center text-gray-400 mt-10">아직 문의가 없어요</p>

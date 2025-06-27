@@ -11,7 +11,7 @@ interface CommentFormProps {
 function CommentForm({ articleId }: CommentFormProps) {
   const [content, setContent] = useState("");
   const handleClick = async () => {
-    const newComment = await postComment("article", articleId, { content });
+    const newComment = await postComment("articles", articleId, { content });
     if (newComment) {
       window.location.reload();
     }

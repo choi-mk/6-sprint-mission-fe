@@ -7,6 +7,7 @@ interface ItemProps {
 }
 
 function Item({ item }: ItemProps) {
+  console.log(item);
   return (
     <div className="flex flex-col w-42 gap-4">
       <div className="w-42 h-42 flex justify-center items-center bg-gray-50">
@@ -14,10 +15,7 @@ function Item({ item }: ItemProps) {
           alt="default item"
           width={100}
           height={100}
-          src={
-            `${process.env.NEXT_PUBLIC_API_URL}${item.images[0]}` ||
-            "/assets/img/img_item_default.png"
-          }
+          src={`${item.images[0]}` || "/assets/img/img_item_default.png"}
           className=" object-cover"
           layout="responsive"
         />

@@ -1,4 +1,4 @@
-GET https://panda-market-api.vercel.app/articles/446/comments
+GET http://3.34.1.90:5432/5050/items
 
 
 ###

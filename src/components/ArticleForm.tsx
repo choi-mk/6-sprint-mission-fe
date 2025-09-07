@@ -54,7 +54,7 @@ function ArticleForm({
   return (
     <form className="w-full">
       <div className="flex w-full justify-between">
-        <div className="font-bold text-xl text-gray-800">상품 등록하기</div>
+        <div className="font-bold text-xl text-gray-800">게시글 등록하기</div>
         <button
           type="submit"
           className={`${

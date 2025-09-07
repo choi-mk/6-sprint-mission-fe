@@ -18,7 +18,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
       <body className="flex flex-col items-center">
         <Providers>
           {!isHide && <Header />}
-          <main className="flex-grow max-w-300 w-full">{children}</main>
+          <main className="flex-grow w-full">{children}</main>
           {!isHide && <Footer />}
         </Providers>
       </body>
